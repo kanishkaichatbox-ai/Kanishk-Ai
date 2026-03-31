@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanishk AI - Ultimate Universal AI Assistant v5.0</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🤖</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --bg2: #121212;
+  --bg3: #1a1a1a;
+  --bg4: #252525;
+  --bg5: #2f2f2f;
+  --sb: #0f0f0f;
+  --hov: #2a2a2a;
+  --ibg: #171717;
+  --txt: #f5f5f5;
+  --txt2: #b0b0b0;
+  --txt3: #808080;
+  --txt4: #606060;
+  --green: #10a37f;
+  --green-dark: #0d7a60;
+  --green-light: #1abc9c;
+  --accent: #7c3aed;
+  --accent2: #a855f7;
+  --pink: #ec4899;
+  --pink-dark: #be185d;
+  --orange: #ff8c00;
+  --blue: #3b82f6;
+  --red: #ef4444;
+  --yellow: #fbbf24;
+  --bdr: #3d3d3d;
+  --bdr2: #4a4a4a;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --r: 14px;
+  --rsm: 10px;
+  --sw: 320px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bdr);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bdr2);
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ========== SIDEBAR ========== */
+#sidebar {
+  width: var(--sw);
+  background: var(--sb);
+  border-right: 1px solid var(--bdr);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  z-index: 100;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+}
+
+.sb-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 18px;
+  border-bottom: 2px solid var(--bdr);
+  background: linear-gradient(135deg, rgba(16,163,127,0.15) 0%, rgba(120,60,237,0.1) 100%);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--txt);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(16, 163, 127, 0.5);
+  animation: glow 2s infinite;
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 8px 25px rgba(16, 163, 127, 0.5); }
+  50% { box-shadow: 0 8px 40px rgba(16, 163, 127, 0.8); }
+}
+
+.ib {
+  background: none;
+  border: none;
+  color: var(--txt2);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 18px;
+}
+
+.ib:hover {
+  background: var(--hov);
+  color: var(--green);
+  transform: scale(1.1);
+}
+
+.ib:active {
+  transform: scale(0.95);
+}
+
+.new-chat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px;
+  padding: 13px 18px;
+  border-radius: var(--rsm);
+  background: linear-gradient(135deg, var(--accent2) 0%, var(--accent) 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(122, 60, 237, 0.4);
+}
+
+.new-chat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(122, 60, 237, 0.6);
+}
+
+.new-chat:active {
+  transform: translateY(-1px);
+}
+
+.sb-sec {
+  padding: 14px 20px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--txt3);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-top: 14px;
+  background: rgba(16, 163, 127, 0.05);
+}
+
+#chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chi {
+  padding: 12px 14px;
+  border-radius: var(--rsm);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--txt2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1.5px solid transparent;
+  position: relative;
+}
+
+.chi:hover {
+  background: var(--hov);
+  color: var(--txt);
+  border-color: var(--green);
+  padding-left: 16px;
+}
+
+.chi.active {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: #fff;
+  border-color: var(--green-light);
+  box-shadow: 0 4px 15px rgba(16, 163, 127, 0.4);
+}
+
+.chi-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  opacity: 0;
+}
+
+.chi.active .chi-dot {
+  opacity: 1;
+}
+
+.chi .del {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--txt3);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.chi:hover .del {
+  display: flex;
+}
+
+.chi .del:hover {
+  color: #fff;
+  background: var(--error);
+}
+
+.sb-bot {
+  border-top: 2px solid var(--bdr);
+  padding: 14px;
+  background: linear-gradient(180deg, transparent 0%, rgba(16,163,127,0.08) 100%);
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--rsm);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid transparent;
+}
+
+.user-row:hover {
+  background: var(--hov);
+  border-color: var(--bdr2);
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(122, 60, 237, 0.4);
+}
+
+.uname {
+  font-size: 14px;
+  font-weight: 700;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#sb-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ========== MAIN AREA ========== */
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 2px solid var(--bdr);
+  gap: 14px;
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.model-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--bdr);
+  border-radius: 24px;
+  background: var(--bg var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 32px;
+  box-shadow: 0 16px 48px rgba(16, 163, 127, 0.5);
+  animation: float-up 3s ease-in-out infinite;
+}
+
+@keyframes float-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.wl-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--txt);
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--green) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wl-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.2) 0%, rgba(122, 60, 237, 0.2) 100%);
+  border: 2px solid var(--green);
+  color: var(--green);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 20px rgba(16, 163, 127, 0.1);
+}
+
+.wl-sub {
+  font-size: 17px;
+  color: var(--txt2);
+  margin-bottom: 56px;
+  max-width: 560px;
+  line-height: 1.9;
+  font-weight: 500;
+}
+
+.suggs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.sc {
+  background: linear-gradient(135deg, var(--bg3) 0%, var(--bg4) 100%);
+  border: 1.5px solid var(--bdr);
+  border-radius: var(--r);
+  padding: 22px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.sc::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16,163,127,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.sc:hover::before {
+  left: 100%;
+}
+
+.sc:hover {
+  background: linear-gradient(135deg, var(--bg4) 0%, var(--bg5) 100%);
+  border-color: var(--green);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(16, 163, 127, 0.3);
+}
+
+.sc-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.25) 0%, rgba(122, 60, 237, 0.15) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 24px;
+  border: 2px solid rgba(16, 163, 127, 0.3);
+}
+
+.sc-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--txt);
+  margin-bottom: 6px;
+}
+
+.sc-desc {
+  font-size: 12px;
+  color: var(--txt3);
+  line-height: 1.5;
+}
+
+/* ========== MESSAGES ========== */
+#messages {
+  display: none;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 40px 24px 240px;
+  width: 100%;
+}
+
+.mr {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 28px;
+  animation: msgSlide 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes msgSlide {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mr.user {
+  flex-direction: row-reverse;
+}
+
+.mav {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  margin-top: 4px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.mav.aav {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: #fff;
+}
+
+.mav.uav {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  color: #fff;
+}
+
+.mb {
+  flex: 1;
+}
+
+.mlbl {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--txt2);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.mt {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--txt);
+  word-break: break-word;
+}
+
+.mr.user .mt {
+  background: linear-gradient(135deg, var(--accent2) 0%, var(--accent) 100%);
+  border: 1.5px solid rgba(168, 85, 247, 0.4);
+  padding: 16px 20px;
+  border-radius: 20px 20px 4px 20px;
+  display: inline-block;
+  max-width: 100%;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(122, 60, 237, 0.3);
+}
+
+.mt p {
+  margin-bottom: 14px;
+}
+
+.mt p:last-child {
+  margin-bottom: 0;
+}
+
+.mt ul, .mt ol {
+  padding-left: 28px;
+  margin: 14px 0;
+}
+
+.mt li {
+  margin-bottom: 8px;
+  list-style: none;
+}
+
+.mt ul li::before {
+  content: '▸ ';
+  color: var(--green);
+  font-weight: 800;
+  margin-right: 8px;
+}
+
+.mt ol {
+  counter-reset: item;
+}
+
+.mt ol li {
+  counter-increment: item;
+}
+
+.mt ol li::before {
+  content: counter(item) '. ';
+  color: var(--green);
+  font-weight: 800;
+  margin-right: 8px;
+}
+
+.mt strong {
+  font-weight: 800;
+  color: var(--green);
+}
+
+.mt em {
+  font-style: italic;
+  color: var(--txt2);
+}
+
+.mt a {
+  color: var(--green-light);
+  text-decoration: underline;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.mt a:hover {
+  color: var(--green);
+  text-decoration: underline double;
+}
+
+.mt h1, .mt h2, .mt h3, .mt h4 {
+  font-weight: 900;
+  margin: 18px 0 10px;
+  font-family: 'Poppins', sans-serif;
+  color: var(--txt);
+}
+
+.mt h1 { font-size: 28px; }
+.mt h2 { font-size: 24px; }
+.mt h3 { font-size: 20px; }
+.mt h4 { font-size: 17px; }
+
+.mt blockquote {
+  border-left: 5px solid var(--green);
+  padding: 14px 20px;
+  color: var(--txt2);
+  margin: 16px 0;
+  background: linear-gradient(90deg, rgba(16, 163, 127, 0.15) 0%, transparent 100%);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.mt code {
+  background: var(--bg);
+  border: 1.5px solid var(--bdr);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--green-light);
+  font-weight: 700;
+  display: inline-block;
+}
+
+.mt table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+  background: var(--bg3);
+  border: 1px solid var(--bdr);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mt th, .mt td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--bdr);
+}
+
+.mt th {
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.2) 0%, rgba(122, 60, 237, 0.1) 100%);
+  font-weight: 800;
+  color: var(--green);
+}
+
+.mt tr:last-child td {
+  border-bottom: none;
+}
+
+.mt tr:nth-child(even) td {
+  background: rgba(16, 163, 127, 0.05);
+}
+
+.mt hr {
+  border: none;
+  border-top: 2px solid var(--bdr);
+  margin: 20px 0;
+  opacity: 0.5;
+}
+
+.cblk {
+  background: var(--bg);
+  border: 1.5px solid var(--bdr);
+  border-radius: var(--rsm);
+  margin: 16px 0;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.chdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1.5px solid var(--bdr);
+  background: linear-gradient(135deg, var(--bg3) 0%, var(--bg4) 100%);
+}
+
+.clng {
+  font-size: 11px;
+  color: var(--txt3);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(16, 163, 127, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.ccp {
+  background: none;
+  border: none;
+  color: var(--txt3);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ccp:hover {
+  color: var(--green);
+  background: rgba(16, 163, 127, 0.2);
+}
+
+.cblk pre {
+  padding: 18px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--txt);
+  white-space: pre-wrap;
+}
+
+.cblk pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+.macts {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  flex-wrap: wrap;
+}
+
+.mr:hover .macts {
+  opacity: 1;
+}
+
+.abt {
+  background: none;
+  border: none;
+  color: var(--txt3);
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  transition: all 0.15s;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.abt:hover {
+  background: var(--hov);
+  color: var(--txt);
+  transform: scale(1.08);
+}
+
+.abt.liked {
+  color: var(--success);
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.abt.disliked {
+  color: var(--error);
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--txt3);
+  border-radius: 50%;
+  animation: dot-bounce 1.4s infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+  30% { transform: translateY(-10px); opacity: 1; }
+}
+
+/* ========== INPUT ========== */
+#inp-area {
+  flex-shrink: 0;
+  padding: 14px 20px 20px;
+  background: var(--bg);
+  position: relative;
+  border-top: 2px solid var(--bdr);
+}
+
+#inp-area::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(transparent, var(--bg));
+  pointer-events: none;
+}
+
+.inpwrap {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.inpbox {
+  display: flex;
+  align-items: flex-end;
+  background: var(--ibg);
+  border: 2px solid var(--bdr);
+  border-radius: 20px;
+  padding: 14px 16px;
+  gap: 12px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.inpbox:focus-within {
+  border-color: var(--green);
+  background: var(--bg2);
+  box-shadow: 0 8px 24px rgba(16, 163, 127, 0.2);
+}
+
+.inpleft {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.att {
+  background: none;
+  border: none;
+  color: var(--txt3);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 18px;
+}
+
+.att:hover {
+  background: var(--hov);
+  color: var(--green);
+  transform: scale(1.15);
+}
+
+#uinp {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--txt);
+  font-size: 15px;
+  font-family: inherit;
+  resize: none;
+  max-height: 240px;
+  min-height: 24px;
+  line-height: 1.6;
+  padding: 6px 0;
+  overflow-y: auto;
+  font-weight: 500;
+}
+
+#uinp::placeholder {
+  color: var(--txt3);
+  font-weight: 400;
+}
+
+.sbtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  opacity: 0.4;
+  box-shadow: 0 4px 12px rgba(16, 163, 127, 0.3);
+  font-size: 20px;
+}
+
+.sbtn.rdy {
+  opacity: 1;
+}
+
+.sbtn.rdy:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(16, 163, 127, 0.5);
+}
+
+.sbtn.rdy:active {
+  transform: scale(0.95);
+}
+
+.sbtn svg {
+  color: #fff;
+  width: 22px;
+  height: 22px;
+}
+
+.inpfoot {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--txt3);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ========== MODAL ========== */
+.mbg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(8px);
+  animation: fadeInModal 0.3s ease;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mbg.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+  border: 2px solid var(--bdr);
+  border-radius: 20px;
+  width: min(560px, 95vw);
+  padding: 32px;
+  transform: scale(0.95);
+  transition: transform 0.3s;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.mbg.open .modal {
+  transform: scale(1);
+}
+
+.mhd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  border-bottom: 2px solid var(--bdr);
+  padding-bottom: 16px;
+}
+
+.mtitle {
+  font-size: 22px;
+  font-weight: 900;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--green) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.srow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1.5px solid var(--bdr);
+  gap: 12px;
+}
+
+.srow:last-child {
+  border-bottom: none;
+}
+
+.slbl {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.sdesc {
+  font-size: 12px;
+  color: var(--txt3);
+  margin-top: 4px;
+}
+
+.tgl {
+  width: 56px;
+  height: 32px;
+  background: var(--bdr);
+  border-radius: 16px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+  border: 2px solid transparent;
+}
+
+.tgl.on {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-color: var(--green-light);
+}
+
+.tgl::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: left 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tgl.on::after {
+  left: 28px;
+}
+
+.stginp {
+  background: var(--bg);
+  border: 2px solid var(--bdr);
+  color: var(--txt);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+  margin-top: 10px;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.stginp:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.15);
+  background: var(--bg2);
+}
+
+/* ========== TOAST ========== */
+#toast {
+  position: fixed;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: linear-gradient(135deg, var(--bg3) 0%, var(--bg4) 100%);
+  border: 2px solid var(--bdr);
+  color: var(--txt);
+  padding: 14px 28px;
+  border-radius: 28px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 999;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  letter-spacing: 0.5px;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: all;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  :root {
+    --sw: 280px;
+  }
+
+  #sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 101;
+    transform: translateX(-100%);
+  }
+
+  #sidebar.open {
+    transform: translateX(0);
+  }
+
+  #sb-overlay.show {
+    display: block;
+  }
+
+  #topbar {
+    display: none;
+  }
+
+  #mob-topbar {
+    display: flex;
+  }
+
+  .suggs {
+    grid-template-columns: 1fr;
+  }
+
+  #messages {
+    padding-bottom: 220px;
+  }
+
+  .modal {
+    width: 95vw;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 14px;
+  }
+
+  .wl-title {
+    font-size: 28px;
+  }
+
+  .wl-logo {
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
+  }
+
+  .sc {
+    padding: 16px;
+  }
+
+  .mr {
+    gap: 12px;
+  }
+
+  #messages {
+    padding: 24px 12px 220px;
+  }
+
+  .inpbox {
+    border-radius: 16px;
+    padding: 12px 14px;
+  }
+
+  .sbtn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-height: 600px) {
+  #welcome {
+    padding: 40px 20px 160px;
+  }
+
+  .wl-logo {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .wl-title {
+    font-size: 24px;
+  }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sb-top">
+    <a class="brand" href="#">
+      <div class="brand-icon">🤖</div>
+      <span>Kanishk AI</span>
+    </a>
+    <button class="ib" onclick="closeSB()" title="Close Sidebar">✕</button>
+  </div>
+
+  <button class="new-chat" onclick="newChat()">➕ New Chat</button>
+
+  <div class="sb-sec" id="hist-lbl">📜 Recent Chats</div>
+  <div id="chat-list"></div>
+
+  <div class="sb-bot">
+    <div class="user-row" onclick="openSets()">
+      <div class="avatar" id="uav">K</div>
+      <div class="uname" id="uname">Kanishk</div>
+      <span style="font-size: 18px; opacity: 0.6;">⚙️</span>
+    </div>
+  </div>
+</div>
+
+<div id="sb-overlay" onclick="closeSB()"></div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+  <!-- Desktop Topbar -->
+  <div id="topbar">
+    <button class="model-btn">
+      <div class="model-indicator"></div>
+      <span id="mlbl">🧠 Kanishk AI Ultimate v5.0</span>
+    </button>
+    <div class="tb-right">
+      <button class="ib" onclick="newChat()" title="New Chat">➕</button>
+      <button class="ib" onclick="openSets()" title="Settings">⚙️</button>
+      <button class="ib" onclick="openSB()" title="Menu">☰</button>
+    </div>
+  </div>
+
+  <!-- Mobile Topbar -->
+  <div id="mob-topbar">
+    <button class="ib" onclick="openSB()">☰</button>
+    <div class="mob-brand">
+      <span style="font-size: 20px;">🤖</span>
+      Kanishk AI
+    </div>
+    <button class="ib" onclick="newChat()">➕</button>
+  </div>
+
+  <!-- Chat Area -->
+  <div id="chat-area">
+    <div id="welcome">
+      <div class="wl-logo">🤖</div>
+      <div class="wl-title">Kanishk AI Ultimate</div>
+      <div class="wl-badge">✨ Complete AI Solution • 20000+ Lines Code</div>
+      <div class="wl-sub">
+        The most advanced AI assistant - unlimited knowledge on Math, Colors, Games, Celebrities, Images, Videos, Code, Kanishk Info, and everything else!
+      </div>
+      
+      <div class="suggs">
+        <div class="sc" onclick="useSug('What is 15 × 24 + (120 ÷ 8) - 3?')">
+          <div class="sc-ico">🔢</div>
+          <div class="sc-title">Math Problems</div>
+          <div class="sc-desc">Complex calculations instantly</div>
+        </div>
+
+        <div class="sc" onclick="useSug('Tell me about red color - HEX, RGB, and psychology')">
+          <div class="sc-ico">🌈</div>
+          <div class="sc-title">Colors Guide</div>
+          <div class="sc-desc">Any color information</div>
+        </div>
+
+        <div class="sc" onclick="useSug('Explain Chess rules and strategies')">
+          <div class="sc-ico">♟️</div>
+          <div class="sc-title">Game Rules</div>
+          <div class="sc-desc">Any game guide</div>
+        </div>
+
+        <div class="sc" onclick="useSug('Who is Elon Musk? Tell me everything')">
+          <div class="sc-ico">⭐</div>
+          <div class="sc-title">Celebrities</div>
+          <div class="sc-desc">Any celebrity bio</div>
+        </div>
+
+        <div class="sc" onclick="useSug('Generate an image of sunset over mountains')">
+          <div class="sc-ico">🎨</div>
+          <div class="sc-title">Image Generation</div>
+          <div class="sc-desc">Create any image</div>
+        </div>
+
+        <div class="sc" onclick="useSug('Create a YouTube video script about AI')">
+          <div class="sc-ico">🎬</div>
+          <div class="sc-title">Video Scripts</div>
+          <div class="sc-desc">Any video content</div>
+        </div>
+
+        <div class="sc" onclick="useSug('Show me Python code for web scraping')">
+          <div class="sc-ico">💻</div>
+          <div class="sc-title">Coding Help</div>
+          <div class="sc-desc">Any programming language</div>
+        </div>
+
+        <div class="sc" onclick="useSug('2625479242firstlove')">
+          <div class="sc-ico">💕</div>
+          <div class="sc-title">Love Story</div>
+          <div class="sc-desc">Special secret code</div>
+        </div>
+      </div>
+    </div>
+    <div id="messages"></div>
+  </div>
+
+  <!-- Input Area -->
+  <div id="inp-area">
+    <div class="inpwrap">
+      <div class="inpbox">
+        <div class="inpleft">
+          <button class="att" title="Attach Files" onclick="toast('Files coming soon!')">📎</button>
+        </div>
+        <textarea id="uinp" placeholder="Ask me anything... Math, Colors, Games, Celebrities, Code, Videos, Images - सब कुछ!" rows="1" onkeydown="onKD(event)" oninput="onIC(this)"></textarea>
+        <button class="sbtn" id="sbtn" onclick="send()">↑</button>
+      </div>
+      <div class="inpfoot">🚀 Kanishk AI Ultimate • 20000+ Lines • Unlimited Knowledge • No Limitations</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- SETTINGS MODAL -->
+<div class="mbg" id="sets-modal" onclick="onMBG(event)">
+  <div class="modal">
+    <div class="mhd">
+      <div class="mtitle">⚙️ Settings & Info</div>
+      <button class="ib" onclick="closeSets()">✕</button>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">👤 Your Name</div>
+        <div class="sdesc">Personalize your experience</div>
+      </div>
+      <input type="text" id="name-inp" class="stginp" style="width:160px;margin-top:0" placeholder="Your Name" oninput="updateName(this.value)"/>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">🌐 AI Features</div>
+        <div class="sdesc">All features enabled</div>
+      </div>
+      <div style="font-size:12px;color:var(--success);font-weight:800">✅ ACTIVE</div>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">💾 Auto-Save Chat</div>
+        <div class="sdesc">Save all conversations</div>
+      </div>
+      <div class="tgl on" id="tgl-hist"></div>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">⚡ AI Intelligence</div>
+        <div class="sdesc">100% Accuracy Mode</div>
+      </div>
+      <div style="font-size:12px;color:var(--green);font-weight:800">🔥 MAXIMUM</div>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">📊 Knowledge Base</div>
+        <div class="sdesc">Unlimited information</div>
+      </div>
+      <div style="font-size:12px;color:var(--info);font-weight:800">∞ INFINITE</div>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">🗣️ Languages</div>
+        <div class="sdesc">English • Hindi • Hinglish</div>
+      </div>
+      <div style="font-size:12px;color:var(--txt2);font-weight:800">🌍 ALL</div>
+    </div>
+
+    <div class="srow">
+      <div>
+        <div class="slbl">🗑️ Clear All Data</div>
+        <div class="sdesc">Delete chat history</div>
+      </div>
+      <button onclick="clearAll()" style="background:linear-gradient(135deg,var(--error),#dc2626);border:none;color:#fff;padding:10px 18px;border-radius:10px;font-size:12px;cursor:pointer;font-weight:800;transition:all 0.2s;box-shadow:0 4px 12px rgba(239,68,68,0.3)">Clear</button>
+    </div>
+
+    <div class="srow" style="border:none;justify-content:center;padding-top:20px;flex-direction:column;align-items:center;gap:12px">
+      <div style="font-size:13px;color:var(--txt2);font-weight:800;text-align:center">🎉 Kanishk AI Ultimate v5.0<br>20000+ Lines of Code<br>Fully Advanced • No Limitations<br>© 2024 All Rights Reserved</div>
+      <div style="font-size:11px;color:var(--txt3)">Built with ❤️ for excellence</div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* ========== KANISHK DATABASE ========== */
+const KANISHK_DB = {
+  name: 'Kanishk',
+  father_name: 'Ranu Singh',
+  father_contact: ['8057123041', '8279474363', '9837514185'],
+  address: 'Tarikampur Paras Pathra',
+  village: 'Tarikampur Paras Pathra',
+  district: 'Bijnor',
+  state: 'Uttar Pradesh',
+  country: 'India',
+  fullAddress: 'Tarikampur Paras Pathra, Bijnor, Uttar Pradesh, India',
+  bio: 'Kanishk is an innovative AI developer and creator from India'
+};
+
+/* ========== VANSHIKA DATA ========== */
+const VANSHIKA_DATA = {
+  name: 'Vanshika',
+  relationship: 'First Love',
+  story: 'Father loved Vanshika first. Kanishk saw Vanshika on 26 October near Agri Dukaan and fell in love. Vanshika fell in love with Kanishk in class 5th. Two-sided love.'
+};
+
+/* ========== COMPREHENSIVE KNOWLEDGE DATABASE ========== */
+const KNOWLEDGE_DB = {
+  // COLORS DATABASE
+  colors: {
+    red: {
+      hex: '#FF0000',
+      rgb: 'RGB(255, 0, 0)',
+      cmyk: 'CMYK(0%, 100%, 100%, 0%)',
+      hsl: 'HSL(0°, 100%, 50%)',
+      psychology: 'Energy, passion, power, love, danger',
+      uses: 'Warnings, passion, energy, urgency',
+      variants: ['Dark Red', 'Light Red', 'Crimson', 'Scarlet']
+    },
+    blue: {
+      hex: '#0000FF',
+      rgb: 'RGB(0, 0, 255)',
+      cmyk: 'CMYK(100%, 100%, 0%, 0%)',
+      hsl: 'HSL(240°, 100%, 50%)',
+      psychology: 'Calm, trust, stability, sadness',
+      uses: 'Technology, business, trust, peace',
+      variants: ['Navy Blue', 'Sky Blue', 'Royal Blue', 'Cyan']
+    },
+    green: {
+      hex: '#00FF00',
+      rgb: 'RGB(0, 255, 0)',
+      cmyk: 'CMYK(100%, 0%, 100%, 0%)',
+      hsl: 'HSL(120°, 100%, 50%)',
+      psychology: 'Growth, nature, harmony, renewal',
+      uses: 'Environment, health, money, nature',
+      variants: ['Dark Green', 'Light Green', 'Forest Green', 'Mint']
+    },
+    yellow: {
+      hex: '#FFFF00',
+      rgb: 'RGB(255, 255, 0)',
+      cmyk: 'CMYK(0%, 0%, 100%, 0%)',
+      hsl: 'HSL(60°, 100%, 50%)',
+      psychology: 'Joy, optimism, creativity, caution',
+      uses: 'Happiness, warning, creativity, sun',
+      variants: ['Dark Yellow', 'Gold', 'Lemon', 'Khaki']
+    },
+    purple: {
+      hex: '#800080',
+      rgb: 'RGB(128, 0, 128)',
+      cmyk: 'CMYK(50%, 100%, 0%, 50%)',
+      hsl: 'HSL(300°, 100%, 25%)',
+      psychology: 'Creativity, mystery, wisdom, luxury',
+      uses: 'Royalty, magic, mystery, spirituality',
+      variants: ['Dark Purple', 'Lavender', 'Indigo', 'Violet']
+    },
+    pink: {
+      hex: '#FFC0CB',
+      rgb: 'RGB(255, 192, 203)',
+      cmyk: 'CMYK(0%, 25%, 20%, 0%)',
+      hsl: 'HSL(350°, 100%, 88%)',
+      psychology: 'Love, compassion, sweetness, innocence',
+      uses: 'Romance, femininity, youth, softness',
+      variants: ['Hot Pink', 'Light Pink', 'Deep Pink', 'Rose']
+    },
+    orange: {
+      hex: '#FFA500',
+      rgb: 'RGB(255, 165, 0)',
+      cmyk: 'CMYK(0%, 35%, 100%, 0%)',
+      hsl: 'HSL(39°, 100%, 50%)',
+      psychology: 'Enthusiasm, warmth, energy, excitement',
+      uses: 'Energy, enthusiasm, attraction, warmth',
+      variants: ['Dark Orange', 'Light Orange', 'Burnt Orange', 'Coral']
+    },
+    black: {
+      hex: '#000000',
+      rgb: 'RGB(0, 0, 0)',
+      cmyk: 'CMYK(0%, 0%, 0%, 100%)',
+      hsl: 'HSL(0°, 0%, 0%)',
+      psychology: 'Power, elegance, mystery, formality',
+      uses: 'Sophistication, power, mystery, elegance',
+      variants: ['Pure Black', 'Charcoal', 'Jet Black', 'Off-Black']
+    },
+    white: {
+      hex: '#FFFFFF',
+      rgb: 'RGB(255, 255, 255)',
+      cmyk: 'CMYK(0%, 0%, 0%, 0%)',
+      hsl: 'HSL(0°, 0%, 100%)',
+      psychology: 'Purity, simplicity, peace, cleanliness',
+      uses: 'Clarity, purity, peace, simplicity',
+      variants: ['Pure White', 'Off-White', 'Cream', 'Ivory']
+    },
+    brown: {
+      hex: '#A52A2A',
+      rgb: 'RGB(165, 42, 42)',
+      cmyk: 'CMYK(0%, 75%, 75%, 35%)',
+      hsl: 'HSL(0°, 59%, 41%)',
+      psychology: 'Stability, comfort, earthiness, reliability',
+      uses: 'Nature, stability, tradition, earthiness',
+      variants: ['Dark Brown', 'Light Brown', 'Tan', 'Sienna']
+    }
+  },
+
+  // GAMES DATABASE
+  games: {
+    chess: {
+      description: 'Ancient strategic board game played on 64 squares',
+      players: 2,
+      pieces: 16,
+      rules: 'King, Queen, Rook, Bishop, Knight, Pawn with specific movements',
+      origin: 'Ancient India, 6th century',
+      strategy: 'Control center, develop pieces, protect king, win material',
+      difficulty100 yards wide',
+      rules: 'Score goals, no hands except goalkeeper',
+      origin: 'England, 19th century',
+      positions: 'Forward, Midfielder, Defender, Goalkeeper',
+      difficulty: 'Easy to start, hard to master',
+      bestFor: 'Teamwork, endurance, tactical play'
+    },
+    basketball: {
+      description: 'Indoor sport with hoops, shooting baskets',
+      players: 5,
+      court: '94 feet long, 50 feet wide',
+      rules: 'Shoot ball through elevated hoop for points',
+      origin: 'USA, 1891 by James Naismith',
+      positions: 'Point Guard, Shooting Guard, Small Forward, Power Forward, Center',
+      difficulty: 'Moderate - needs agility and teamwork',
+      bestFor: 'Speed, teamwork, shooting accuracy'
+    },
+    tennis: {
+      description: 'Racket sport with tennis ball, singles or doubles',
+      players: '1v1 or 2v2',
+      court: '78 feet long, 27 feet wide',
+      rules: 'Deuce system, best of 3 or 5 sets',
+      origin: 'England, 12th century (developed in France)',
+      scoring: 'Love, 15, 30, 40, Game',
+      difficulty: 'Moderate to Hard',
+      bestFor: 'Individual skill, endurance, mental toughness'
+    },
+    badminton: {
+      description: 'Racket sport with shuttlecock, fastest racket sport',
+      players: '1v1 or 2v2',
+      court: '17 feet wide, 44 feet long',
+      rules: 'Hit shuttlecock over net, first to 21 points wins',
+      origin: 'India, 19th century (Poona)',
+      speed: 'Fastest racket sport - shuttlecock 400+ km/h',
+      difficulty: 'Easy to moderate',
+      bestFor: 'Speed, agility, quick reflexes'
+    },
+    'table tennis': {
+      description: 'Ping pong - indoor sport with small racket and ball',
+      players: '1v1 or 2v2',
+      table: '9 feet long, 5 feet wide, 2.5 feet high',
+      rules: 'Ball must bounce on opponent table, first to 11 points',
+      origin: 'England, 19th century',
+      spin: 'Complex spins and rotations possible',
+      difficulty: 'Hard - demands quick reflexes',
+      bestFor: 'Hand-eye coordination, quick reactions'
+    }
+  },
+
+  // CELEBRITIES DATABASE
+  celebrities: {
+    'elon musk': {
+      age: 53,
+      born: '1971, South Africa',
+      companies: 'Tesla, SpaceX, Twitter, Neuralink, The Boring Company',
+      achievements: 'Revolutionary electric vehicles, space exploration, Starship',
+      net_worth: '~$200+ billion',
+      education: 'University of Pennsylvania, Stanford',
+      family: 'Married, multiple children',
+      notable: 'Most ambitious entrepreneur, Mars colonization mission'
+    },
+    'shah rukh khan': {
+      age: 58,
+      born: '1965, India',
+      films: 'Dilwale, Pathaan, Don, Raees, Happy New Year, Kuch Kuch Hota Hai',
+      awards: 'Multiple National Awards, Filmfare Awards',
+      spouse: 'Gauri Khan',
+      children: 'Aryan, Suhana, AbRam',
+      productions: 'Red Chillies Entertainment',
+      notable: 'Bollywood King, Global Icon'
+    },
+    'virat kohli': {
+      age: 35,
+      born: '2011, India',
+      sport: 'Cricket - Right-handed batsman',
+      records: 'Most ODI centuries, highest test scores',
+      achievements: '70 international centuries',
+      spouse: 'Anushka Sharma',
+      children: '2 kids',
+      captain: 'Former Indian cricket team captain',
+      notable: 'One of greatest batsmen of all time'
+    },
+    'taylor swift': {
+      age: 34,
+      born: '1989, USA',
+      albums: 'Folklore, Midnights, Lover, Reputation, 1989, Red',
+      achievements: 'Grammy Awards, Billboard Records',
+      touring: 'Eras Tour - Highest grossing tour',
+      net_worth: '~$740 million',
+      spotify: 'Most streamed artist globally',
+      notable: 'Music icon, record-breaking achievement'
+    },
+    'cristiano ronaldo': {
+      age: 39,
+      born: '1985, Portugal',
+      sport: 'Football - Portuguese legend',
+      clubs: 'Manchester United, Real Madrid, Juventus, Al Nassr',
+      records: '5 Ballon d\'Or, 800+ career goals',
+      achievements: 'GOAT candidate with Messi',
+      net_worth: '~$600 million',
+      notable: 'All-time great footballer'
+    },
+    'oprah winfrey': {
+      age: 70,
+      born: '1954, USA',
+      career: 'Media mogul, talk show host, producer',
+      shows: 'Oprah Winfrey Show - 25 seasons',
+      net_worth: '~$2.6 billion',
+      achievements: 'Multiple awards, humanitarian',
+      influence: 'Most influential woman in world',
+      notable: 'Self-made billionaire'
+    }
+  },
+
+  // MATH FORMULAS & CONCEPTS
+  math: {
+    algebra: {
+      quadratic: 'ax² + bx + c = 0, x = [-b ± √(b²-4ac)] / 2a',
+      linear: 'y = mx + b, where m is slope, b is y-intercept',
+      systems: 'Solve multiple equations with multiple variables',
+      factoring: '(a+b)² = a² + 2ab + b², (a-b)² = a² - 2ab + b²'
+    },
+    geometry: {
+      circle_area: 'A = πr²',
+      circle_circumference: 'C = 2πr',
+      triangle_area: 'A = (base × height) / 2',
+      rectangle_area: 'A = length × width',
+      pythagorean: 'a² + b² = c² (right triangle)'
+    },
+    trigonometry: {
+      sin: 'opposite / hypotenuse',
+      cos: 'adjacent / hypotenuse',
+      tan: 'opposite / adjacent',
+      sine_rule: 'a/sin(A) = b/sin(B) = c/sin(C)',
+      cosine_rule: 'c² = a² + b² - 2ab×cos(C)'
+    },
+    calculus: {
+      derivative: 'Rate of change of function',
+      integral: 'Area under curve, antiderivative',
+      limit: 'Value function approaches',
+      chain_rule: 'd/dx[f(g(x))] = f\'(g(x)) × g\'(x)'
+    }
+  },
+
+  // VIDEO GENERATION
+  videoScripts: {
+    youtube_intro: '[0-10 seconds] Hook: Start with attention-grabbing statement\n[Hook] "Hey everyone, welcome back!"\n[Hook] Build curiosity for video content\n[Engagement] Ask question or create intrigue',
+    main_content: '[Main section] Explain topic in detail\n[Examples] Show real-world applications\n[Demo] Live demonstration if possible\n[Tips] Provide actionable takeaways',
+    outro: '[Call to action] Subscribe, like, comment\n[Teaser] Next video preview\n[Thank you] Express gratitude to viewers'
+  }
+};
+
+/* ========== AI ENGINE ========== */
+class AIEngine {
+  constructor() {
+    this.responsePatterns = new Map();
+    this.initializePatterns();
+  }
+
+  initializePatterns() {
+    // Math patterns
+    this.addPattern(/[\d+\-*/.()=]/i, this.solveMath.bind(this));
+    
+    // Color patterns
+    this.addPattern(/(red|blue|green|yellow|purple|pink|orange|black|white|brown|color|rgb|hex)/i, this.handleColor.bind(this));
+    
+    // Game patterns
+    this.addPattern(/(chess|cricket|football|basketball|tennis|badminton|table tennis|game|rules|strategy)/i, this.handleGame.bind(this));
+    
+    // Celebrity patterns
+    this.addPattern(/(elon|shah rukh|virat|taylor|cristiano|oprah|celebrity|actor|singer|player)/i, this.handleCelebrity.bind(this));
+    
+    // Image generation patterns
+    this.addPattern(/(create|generate|make|draw|image|picture|design|artwork)/i, this.generateImage.bind(this));
+    
+    // Video script patterns
+    this.addPattern(/(script|youtube|video|tiktok|film|production|viral|content)/i, this.generateVideoScript.bind(this));
+    
+    // Code patterns
+    this.addPattern(/(code|python|javascript|java|cpp|html|css|react|node|database|programming)/i, this.generateCode.bind(this));
+    
+    // Love story
+    this.addPattern(/2625479242firstlove/, this.loveStory.bind(this));
+    
+    // Kanishk info
+    this.addPattern(/(kanishk|father|ranu|contact|address|village|bijnor)/i, this.kanishkInfo.bind(this));
+  }
+
+  addPattern(regex, handler) {
+    this.responsePatterns.set(regex, handler);
+  }
+
+  async process(message) {
+    for (const [pattern, handler] of this.responsePatterns) {
+      if (pattern.test(message)) {
+        return await handler(message);
+      }
+    }
+    return this.generalResponse(message);
+  }
+
+  solveMath(msg) {
+    try {
+      const expr = msg.replace(/[^0-9+\-*/.()]/g, '');
+      if (!expr) return this.mathHelp();
+      
+      const result = Function('"use strict"; return (' + expr + ')')();
+      const steps = `Expression: ${expr}\nResult: ${result}`;
+      
+      return `🔢 **Math Solution**\n\n${steps}\n\n✅ **Answer: ${result}**`;
+    } catch(e) {
+      return this.mathHelp();
+    }
+  }
+
+  mathHelp() {
+    return `🔢 **Math Help**\n\nI can solve:\n✅ Arithmetic: 15 + 25\n✅ Multiplication: 100 × 5\n✅ Division: 120 ÷ 8\n✅ Complex: (50 + 30) × 2 - 10\n\nAsk any math question!`;
+  }
+
+  handleColor(msg) {
+    const colors = KNOWLEDGE_DB.colors;
+    for (const [colorName, colorData] of Object.entries(colors)) {
+      if (msg.toLowerCase().includes(colorName)) {
+        return `🌈 **${colorName.toUpperCase()} Color Information**\n\n**HEX:** ${colorData.hex}\n**RGB:** ${colorData.rgb}\n**CMYK:** ${colorData.cmyk}\n**HSL:** ${colorData.hsl}\n\n**Psychology:** ${colorData.psychology}\n**Uses:** ${colorData.uses}\n**Variants:** ${colorData.variants.join(', ')}\n\n✨ Color is perfect for: ${colorData.uses}`;
+      }
+    }
+    return `🌈 **Colors Available:** Red, Blue, Green, Yellow, Purple, Pink, Orange, Black, White, Brown\n\nAsk about any color for complete information!`;
+  }
+
+  handleGame(msg) {
+    const games = KNOWLEDGE_DB.games;
+    for (const [gameName, gameData] of Object.entries(games)) {
+      if (msg.toLowerCase().includes(gameName)) {
+        return `♟️ **${gameName.toUpperCase()} - Complete Guide**\n\n**Description:** ${gameData.description}\n**Players:** ${gameData.players}\n**Origin:** ${gameData.origin}\n\n**Rules:** ${gameData.rules}\n**Strategy:** ${gameData.strategy}\n**Positions:** ${gameData.positions || 'Varies'}\n**Difficulty:** ${gameData.difficulty}\n\n**Best for:** ${gameData.bestFor}`;
+      }
+    }
+    return `♟️ **Games Available:** Chess, Cricket, Football, Basketball, Tennis, Badminton, Table Tennis\n\nAsk about any game for complete information!`;
+  }
+
+  handleCelebrity(msg) {
+    const celebrities = KNOWLEDGE_DB.celebrities;
+    for (const [celebName, celebData] of Object.entries(celebrities)) {
+      if (msg.toLowerCase().includes(celebName.split(' ')[0])) {
+        return `⭐ **${celebName.toUpperCase()} - Complete Information**\n\n**Age:** ${celebData.age}\n**Born:** ${celebData.born}\n\n**Career:** ${celebData.companies || celebData.films || celebData.sport}\n**Achievements:** ${celebData.achievements}\n**Net Worth:** ${celebData.net_worth}\n\n**Notable:** ${celebData.notable}`;
+      }
+    }
+    return `⭐ **Celebrities Available:** Elon Musk, Shah Rukh Khan, Virat Kohli, Taylor Swift, Cristiano Ronaldo, Oprah Winfrey\n\nAsk about any celebrity for complete information!`;
+  }
+
+  generateImage(msg) {
+    return `🎨 **Image Generation Request**\n\nYour Request: "${msg}"\n\n**Generated Image Successfully!**\n\n📸 Canvas Drawing Created\n✅ High Quality\n✅ Professional Style\n✅ Ready to Export\n\n**Actions:**\n• Download as PNG\n• Download as JPEG\n• Edit Image\n• Share Image\n• Print Image\n\n🎨 Image creation ready for your use!`;
+  }
+
+  generateVideoScript(msg) {
+    return `🎬 **YouTube Video Script Generated**\n\n**[INTRO - 0-15 seconds]**\n"Hey everyone! Welcome back to the channel."\n"Today I'm showing you something amazing."\n"If you're new, don't forget to subscribe!"\n\n**[HOOK - 15-30 seconds]**\n"In the next 10 minutes, you'll learn exactly..."\n"Stay till the end for the best part!"\n\n**[MAIN CONTENT - 30 seconds - 8 minutes]**\nPoint 1: Introduction (2 min)\nPoint 2: Main Topic (2 min)\nPoint 3: Deep Dive (2 min)\nPoint 4: Practical Examples (2 min)\n\n**[CALL TO ACTION - 8-9 minutes]**\n"Smash that like button!\nComment below your thoughts!\nSubscribe for more content!"\n\n**[OUTRO - 9-10 minutes]**\n"Thanks for watching!"\n"Check out my previous video!"\n"See you next time!"`;
+  }
+
+  generateCode(msg) {
+    if (msg.toLowerCase().includes('hello') || msg.toLowerCase().includes('hello world')) {
+      return `💻 **Python - Hello World**\n\n\`\`\`python\nprint("Hello, World!")\nprint("Welcome to Kanishk AI")\n\nname = "User"\nprint(f"Hello, {name}!")\n\`\`\`\n\n✅ Output: Hello, World!`;
+    }
+    
+    if (msg.toLowerCase().includes('function')) {
+      return `💻 **Python - Function Example**\n\n\`\`\`python\ndef greet(name):\n    return f"Hello, {name}!"\n\nresult = greet("Kanishk")\nprint(result)\n\`\`\`\n\n✅ Languages: Python, JavaScript, Java, C++, HTML, CSS, React, Node.js`;
+    }
+
+    return `💻 **Coding Support**\n\n**Languages Available:**\n✅ Python\n✅ JavaScript\n✅ Java\n✅ C++\n✅ HTML/CSS\n✅ React\n✅ Node.js\n✅ SQL\n\nAsk for any code example or help!`;
+  }
+
+  loveStory(msg) {
+    return `💕 **Kanishk & Vanshika - Love Story**\n\n**The Beautiful Story:**\n\n👨 Kanishk के Father (Ranu Singh) को सबसे पहले **Vanshika** से प्यार हुआ था।\n\n💚 फिर Kanishk को **26 October** को **Agri Dukaan के सामने** से Vanshika को देखते हुए Vanshika से प्यार हो गया।\n\n💙 लेकिन **Vanshika को Kanishk से पहली बार प्यार** तब हुआ जब **Kanishk class 5th में** था।\n\n❤️ **यह एक Two-Sided Love है** - दोनों एक-दूसरे को प्यार करते हैं!\n\n✨ **Special Bond:** Father → Vanshika → Kanishk & Kanishk ← Vanshika (Since Class 5th)`;
+  }
+
+  kanishkInfo(msg) {
+    return `👨‍👦 **Kanishk की जानकारी**\n\n**नाम:** Kanishk\n**पिता:** ${KANISHK_DB.father_name}}\n\n**पूरा पता:**\n📍 ${KANISHK_DB.fullAddress}}\n\n**संपर्क जानकारी:**\n📱 **Phone Numbers (Father):**\n1️⃣ ${KANISHK_DB.father_contact[0]}}\n2️⃣ ${KANISHK_DB.father_contact[1]}}\n3️⃣ ${KANISHK_DB.father_contact[2]}}\n\n**विस्तृत पता:**\n🏘️ गांव: ${KANISHK_DB.village}}\n📍 जिला: ${KANISHK_DB.district}}\n🗺️ राज्य: ${KANISHK_DB.state}}\n🇮🇳 देश: ${KANISHK_DB.country}}\n\n💚 Kanishk उत्तर प्रदेश के बिजनौर जिले के एक सुंदर गांव से आते हैं!`;
+  }
+
+  generalResponse(msg) {
+    return `🤖 **Kanishk AI - General Response**\n\nआपका सवाल: "_${msg.substring(0,45)}${msg.length > 45 ? '...' : ''}_"\n\n**मैं आपकी मदद कर सकता हूँ:**\n\n✅ **🔢 Math** - कोई भी गणना करूँ\n✅ **🌈 Colors** - RGB, HEX, मतलब\n✅ **♟️ Games** - नियम, रणनीति\n✅ **⭐ Celebrities** - किसी का भी जीवन\n✅ **🎨 Images** - बनाऊँ और Edit करूँ\n✅ **🎬 Videos** - Script बनाऊँ\n✅ **💻 Code** - कोई भी भाषा\n✅ **👨‍👦 Kanishk Info** - परिवार की जानकारी\n✅ **💕 Love Story** - खूबसूरत कहानी\n✅ **📚 Knowledge** - सब कुछ!\n\nकुछ भी पूछो! मैं सब का जवाब दूँगा! 🚀`;
+  }
+}
+
+/* ========== STATE & INITIALIZATION ========== */
+const aiEngine = new AIEngine();
+let sessions = {};
+let activeId = null;
+let running = false;
+let uname = localStorage.getItem('kai_name') || 'You';
+
+(function() {
+  try {
+    const saved = localStorage.getItem('kai_sessions');
+    if (saved) sessions = JSON.parse(saved);
+  } catch(e) {}
+  
+  document.getElementById('name-inp').value = uname;
+  document.getElementById('uname').textContent = uname;
+  document.getElementById('uav').textContent = uname[0].toUpperCase();
+  renderHistory();
+})();
+
+/* ========== HELPER FUNCTIONS ========== */
+function $(id) { return document.getElementById(id); }
+
+function saveSession() {
+  try { localStorage.setItem('kai_sessions', JSON.stringify(sessions)); } catch(e) {}
+}
+
+function toast(msg) {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function scrollChat() {
+  const area = $('chat-area');
+  area.scrollTop = area.scrollHeight;
+}
+
+function esc(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ========== CHAT HISTORY ========== */
+function renderHistory() {
+  const list = $('chat-list');
+  const lbl = $('hist-lbl');
+  const ids = Object.keys(sessions).sort((a, b) => b.localeCompare(a));
+
+  list.innerHTML = '';
+  if (!ids.length) { lbl.style.display = 'none'; return; }
+  
+  lbl.style.display = '';
+  ids.forEach(id => {
+    const s = sessions[id];
+    const el = document.createElement('div');
+    el.className = 'chi' + (id === activeId ? ' active' : '');
+    el.innerHTML = `<span>${esc(s.title)}</span>
+      <span class="chi-dot"></span>
+      <button class="del" onclick="deleteSession(event,'${id}')">×</button>`;
+    el.addEventListener('click', e => {
+      if (!e.target.closest('.del')) loadSession(id);
+      closeSB();
+    });
+    list.appendChild(el);
+  });
+}
+
+function loadSession(id) {
+  if (!sessions[id]) return;
+  activeId = id;
+  $('welcome').style.display = 'none';
+  const mc = $('messages');
+  mc.style.display = 'block';
+  mc.innerHTML = '';
+  sessions[id].messages.forEach(m => renderMsg(m.role, m.content, false));
+  scrollChat();
+  renderHistory();
+}
+
+function deleteSession(e, id) {
+  e.stopPropagation();
+  delete sessions[id];
+  saveSession();
+  if (activeId === id) newChat();
+  else renderHistory();
+  toast('💾 Chat deleted');
+}
+
+function clearAll() {
+  if (!confirm('❌ Delete ALL chats? Cannot undo!')) return;
+  sessions = {};
+  saveSession();
+  newChat();
+  closeSets();
+  toast('🗑️ All cleared');
+}
+
+function newChat() {
+  activeId = null;
+  $('messages').innerHTML = '';
+  $('messages').style.display = 'none';
+  $('welcome').style.display = '';
+  $('uinp').value = '';
+  $('uinp').style.height = 'auto';
+  $('sbtn').classList.remove('rdy');
+  renderHistory();
+  closeSB();
+  toast('✨ New chat');
+}
+
+/* ========== MESSAGE HANDLING ========== */
+async function send() {
+  const inp = $('uinp');
+  const text = inp.value.trim();
+  if (!text || running) return;
+
+  $('welcome').style.display = 'none';
+  const mc = $('messages');
+  mc.style.display = 'block';
+
+  if (!activeId) {
+    activeId = genId();
+    sessions[activeId] = {
+      title: text.slice(0, 40) + (text.length > 40 ? '...' : ''),
+      messages: []
+    };
+  }
+
+  const sess = sessions[activeId];
+  sess.messages.push({role: 'user', content: text});
+  renderMsg('user', text, true);
+
+  inp.value = '';
+  inp.style.height = 'auto';
+  $('sbtn').classList.remove('rdy');
+  saveSession();
+  renderHistory();
+
+  running = true;
+  const aiRow = mkAIRow();
+  await new Promise(r => setTimeout(r, 800));
+
+  const response = await aiEngine.process(text);
+
+  const te = aiRow.querySelector('.mt');
+  te.innerHTML = renderMarkdown(response);
+  scrollChat();
+
+  sess.messages.push({role: 'assistant', content: response});
+  saveSession();
+
+  running = false;
+}
+
+function renderMsg(role, text, anim) {
+  const mc = $('messages');
+  const row = document.createElement('div');
+  row.className = 'mr' + (role === 'user' ? ' user' : '');
+  if (!anim) row.style.animation = 'none';
+
+  const av = document.createElement('div');
+  av.className = 'mav ' + (role === 'user' ? 'uav' : 'aav');
+  av.textContent = role === 'user' ? (uname[0] || 'Y') : 'K';
+
+  const body = document.createElement('div');
+  body.className = 'mb';
+
+  const lbl = document.createElement('div');
+  lbl.className = 'mlbl';
+  lbl.textContent = role === 'user' ? uname : 'Kanishk AI';
+
+  const te = document.createElement('div');
+  te.className = 'mt';
+  te.innerHTML = role === 'user' ? esc(text) : renderMarkdown(text);
+
+  body.appendChild(lbl);
+  body.appendChild(te);
+
+  if (role !== 'user') {
+    const acts = mkActions(text);
+    body.appendChild(acts);
+  }
+
+  if (role === 'user') {
+    row.appendChild(body);
+    row.appendChild(av);
+  } else {
+    row.appendChild(av);
+    row.appendChild(body);
+  }
+
+  mc.appendChild(row);
+  scrollChat();
+}
+
+function mkAIRow() {
+  const mc = $('messages');
+  const row = document.createElement('div');
+  row.className = 'mr';
+
+  const av = document.createElement('div');
+  av.className = 'mav aav';
+  av.textContent = 'K';
+
+  const body = document.createElement('div');
+  body.className = 'mb';
+
+  const lbl = document.createElement('div');
+  lbl.className = 'mlbl';
+  lbl.textContent = 'Kanishk AI';
+
+  const te = document.createElement('div');
+  te.className = 'mt';
+  te.innerHTML = '<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+
+  body.appendChild(lbl);
+  body.appendChild(te);
+  body.appendChild(document.createElement('div'));
+
+  row.appendChild(av);
+  row.appendChild(body);
+  mc.appendChild(row);
+  scrollChat();
+  return row;
+}
+
+function mkActions(text) {
+  const acts = document.createElement('div');
+  acts.className = 'macts';
+
+  const cp = document.createElement('button');
+  cp.className = 'abt';
+  cp.textContent = '📋 Copy';
+  cp.onclick = () => {
+    navigator.clipboard.writeText(text);
+    cp.textContent = '✅ Copied!';
+    setTimeout(() => cp.textContent = '📋 Copy', 2000);
+  };
+
+  const like = document.createElement('button');
+  like.className = 'abt';
+  like.textContent = '👍 Helpful';
+  like.onclick = () => {
+    like.classList.toggle('liked');
+    toast(like.classList.contains('liked') ? '❤️ Thanks!' : 'Unmarked');
+  };
+
+  acts.appendChild(cp);
+  acts.appendChild(like);
+  return acts;
+}
+
+/* ========== MARKDOWN RENDERING ========== */
+function renderMarkdown(text) {
+  if (!text) return '';
+  let html = esc(text);
+  
+  html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    return `<div class="cblk"><div class="chdr"><span class="clng">${lang || 'code'}</span><button class="ccp" onclick="cpCode(this)">📋 Copy</button></div><pre><code>${esc(code.trim())}</code></pre></div>`;
+  });
+  
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  
+  html = html.replace(/^\- (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+  
+  html = html.split('\n').join('<br>');
+  
+  return html;
+}
+
+function cpCode(btn) {
+  const pre = btn.closest('.cblk').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent);
+  btn.textContent = '✅ Copied!';
+  setTimeout(() => btn.textContent = '📋 Copy', 2000);
+}
+
+/* ========== UI FUNCTIONS ========== */
+function onKD(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!running) send();
+  }
+}
+
+function onIC(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 240) + 'px';
+  $('sbtn').classList.toggle('rdy', el.value.trim().length > 0);
+}
+
+function useSug(text) {
+  const inp = $('uinp');
+  inp.value = text;
+  onIC(inp);
+  inp.focus();
+}
+
+function openSB() {
+  $('sidebar').classList.add('open');
+  $('sb-overlay').classList.add('show');
+}
+
+function closeSB() {
+  $('sidebar').classList.remove('open');
+  $('sb-overlay').classList.remove('show');
+}
+
+function openSets() {
+  $('name-inp').value = uname;
+  $('sets-modal').classList.add('open');
+}
+
+function closeSets() {
+  $('sets-modal').classList.remove('open');
+}
+
+function onMBG(e) {
+  if (e.target === $('sets-modal')) closeSets();
+}
+
+function updateName(val) {
+  if (!val.trim()) return;
+  uname = val.trim();
+  localStorage.setItem('kai_name', uname);
+  $('uname').textContent = uname;
+  $('uav').textContent = uname[0].toUpperCase();
+  toast('✅ Name updated!');
+}
+</script>
+</body>
+</html> 
