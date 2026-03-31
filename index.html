@@ -14,6 +14,22 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  background: #0a0a0a;
+  color: #f5f5f5;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
   --bg: #0a0a0a;
   --bg2: #121212;
@@ -49,41 +65,15 @@
   --sw: 320px;
 }
 
-html, body {
-  height: 100%;
-  background: var(--bg);
-  color: var(--txt);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg3);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bdr);
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--bdr2);
-}
-
 #app {
   display: flex;
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
+  position: fixed;
 }
 
-/* ========== SIDEBAR ========== */
+/* ============= SIDEBAR STYLES ============= */
 #sidebar {
   width: var(--sw);
   background: var(--sb);
@@ -205,6 +195,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-height: 0;
 }
 
 .chi {
@@ -276,6 +267,7 @@ html, body {
   border-top: 2px solid var(--bdr);
   padding: 14px;
   background: linear-gradient(180deg, transparent 0%, rgba(16,163,127,0.08) 100%);
+  flex-shrink: 0;
 }
 
 .user-row {
@@ -332,12 +324,13 @@ html, body {
   to { opacity: 1; }
 }
 
-/* ========== MAIN AREA ========== */
+/* ============= MAIN AREA ============= */
 #main {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0;
 }
 
 #topbar {
@@ -349,6 +342,7 @@ html, body {
   gap: 14px;
   background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  flex-shrink: 0;
 }
 
 .model-btn {
@@ -358,7 +352,86 @@ html, body {
   padding: 10px 18px;
   border: 1.5px solid var(--bdr);
   border-radius: 24px;
-  background: var(--bg var(--green) 0%, var(--green-dark) 100%);
+  background: var(--bg3);
+  color: var(--txt);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.model-btn:hover {
+  background: var(--hov);
+  border-color: var(--green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(16, 163, 127, 0.3);
+}
+
+.model-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-dot 2s infinite;
+  box-shadow: 0 0 10px var(--success);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.tb-right {
+  display: flex;
+  gap: 8px;
+}
+
+#mob-topbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 2px solid var(--bdr);
+  background: var(--bg2);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  flex-shrink: 0;
+}
+
+.mob-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--txt);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ============= CHAT AREA ============= */
+#chat-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  min-height: 0;
+  background: var(--bg);
+}
+
+#welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 60px 30px 220px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+}
+
+.wl-logo {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -481,7 +554,7 @@ html, body {
   line-height: 1.5;
 }
 
-/* ========== MESSAGES ========== */
+/* ============= MESSAGES ============= */
 #messages {
   display: none;
   max-width: 950px;
@@ -538,6 +611,7 @@ html, body {
 
 .mb {
   flex: 1;
+  min-width: 0;
 }
 
 .mlbl {
@@ -610,6 +684,10 @@ html, body {
 .mt strong {
   font-weight: 800;
   color: var(--green);
+}
+
+.mr.user .mt strong {
+  color: #fff;
 }
 
 .mt em {
@@ -836,7 +914,7 @@ html, body {
   30% { transform: translateY(-10px); opacity: 1; }
 }
 
-/* ========== INPUT ========== */
+/* ============= INPUT ============= */
 #inp-area {
   flex-shrink: 0;
   padding: 14px 20px 20px;
@@ -919,6 +997,8 @@ html, body {
   line-height: 1.6;
   padding: 6px 0;
   overflow-y: auto;
+  -webkit-appearance: none;
+  appearance: none;
   font-weight: 500;
 }
 
@@ -927,21 +1007,26 @@ html, body {
   font-weight: 400;
 }
 
+#uinp:focus {
+  outline: none;
+}
+
 .sbtn {
   width: 44px;
   height: 44px;
   border-radius: 14px;
   border: none;
   background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
+  font-size: 20px;
   flex-shrink: 0;
   opacity: 0.4;
+  transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(16, 163, 127, 0.3);
-  font-size: 20px;
 }
 
 .sbtn.rdy {
@@ -957,12 +1042,6 @@ html, body {
   transform: scale(0.95);
 }
 
-.sbtn svg {
-  color: #fff;
-  width: 22px;
-  height: 22px;
-}
-
 .inpfoot {
   text-align: center;
   margin-top: 12px;
@@ -972,20 +1051,21 @@ html, body {
   letter-spacing: 0.5px;
 }
 
-/* ========== MODAL ========== */
+/* ============= MODAL ============= */
 .mbg {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.8);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  backdrop-filter: blur(8px);
+  z-index: 150;
+  padding: 20px;
   animation: fadeInModal 0.3s ease;
+  backdrop-filter: blur(8px);
 }
 
 @keyframes fadeInModal {
@@ -994,8 +1074,8 @@ html, body {
 }
 
 .mbg.open {
-  opacity: 1;
-  pointer-events: all;
+  display: flex;
+  pointer-events: auto;
 }
 
 .modal {
@@ -1006,9 +1086,11 @@ html, body {
   padding: 32px;
   transform: scale(0.95);
   transition: transform 0.3s;
-  max-height: 90vh;
+  max-height: 80vh;
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  z-index: 151;
+  pointer-events: auto;
 }
 
 .mbg.open .modal {
@@ -1112,7 +1194,7 @@ html, body {
   background: var(--bg2);
 }
 
-/* ========== TOAST ========== */
+/* ============= TOAST ============= */
 #toast {
   position: fixed;
   bottom: 110px;
@@ -1139,7 +1221,7 @@ html, body {
   pointer-events: all;
 }
 
-/* ========== RESPONSIVE ========== */
+/* ============= RESPONSIVE ============= */
 @media (max-width: 768px) {
   :root {
     --sw: 280px;
@@ -1163,11 +1245,11 @@ html, body {
   }
 
   #topbar {
-    display: none;
+    display: flex;
   }
 
   #mob-topbar {
-    display: flex;
+    display: none;
   }
 
   .suggs {
@@ -1237,6 +1319,23 @@ html, body {
     font-size: 24px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bdr);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bdr2);
+}
 </style>
 </head>
 <body>
@@ -1249,16 +1348,16 @@ html, body {
       <div class="brand-icon">🤖</div>
       <span>Kanishk AI</span>
     </a>
-    <button class="ib" onclick="closeSB()" title="Close Sidebar">✕</button>
+    <button class="ib" onclick="window.appInstance.closeSB()" title="Close Sidebar">✕</button>
   </div>
 
-  <button class="new-chat" onclick="newChat()">➕ New Chat</button>
+  <button class="new-chat" onclick="window.appInstance.newChat()">➕ New Chat</button>
 
-  <div class="sb-sec" id="hist-lbl">📜 Recent Chats</div>
+  <div class="sb-sec">📜 Recent Chats</div>
   <div id="chat-list"></div>
 
   <div class="sb-bot">
-    <div class="user-row" onclick="openSets()">
+    <div class="user-row" onclick="window.appInstance.openSettings()">
       <div class="avatar" id="uav">K</div>
       <div class="uname" id="uname">Kanishk</div>
       <span style="font-size: 18px; opacity: 0.6;">⚙️</span>
@@ -1266,7 +1365,7 @@ html, body {
   </div>
 </div>
 
-<div id="sb-overlay" onclick="closeSB()"></div>
+<div id="sb-overlay" onclick="window.appInstance.closeSB()"></div>
 
 <!-- MAIN CONTENT -->
 <div id="main">
@@ -1277,20 +1376,20 @@ html, body {
       <span id="mlbl">🧠 Kanishk AI Ultimate v5.0</span>
     </button>
     <div class="tb-right">
-      <button class="ib" onclick="newChat()" title="New Chat">➕</button>
-      <button class="ib" onclick="openSets()" title="Settings">⚙️</button>
-      <button class="ib" onclick="openSB()" title="Menu">☰</button>
+      <button class="ib" onclick="window.appInstance.newChat()" title="New Chat">➕</button>
+      <button class="ib" onclick="window.appInstance.openSettings()" title="Settings">⚙️</button>
+      <button class="ib" onclick="window.appInstance.openSB()" title="Menu">☰</button>
     </div>
   </div>
 
   <!-- Mobile Topbar -->
   <div id="mob-topbar">
-    <button class="ib" onclick="openSB()">☰</button>
+    <button class="ib" onclick="window.appInstance.openSB()">☰</button>
     <div class="mob-brand">
       <span style="font-size: 20px;">🤖</span>
       Kanishk AI
     </div>
-    <button class="ib" onclick="newChat()">➕</button>
+    <button class="ib" onclick="window.appInstance.newChat()">➕</button>
   </div>
 
   <!-- Chat Area -->
@@ -1300,53 +1399,53 @@ html, body {
       <div class="wl-title">Kanishk AI Ultimate</div>
       <div class="wl-badge">✨ Complete AI Solution • 20000+ Lines Code</div>
       <div class="wl-sub">
-        The most advanced AI assistant - unlimited knowledge on Math, Colors, Games, Celebrities, Images, Videos, Code, Kanishk Info, and everything else!
+        The most advanced AI assistant - unlimited knowledge on Math, Colors, Games, Celebrities, Images, Videos, Code, Kanishk Info, Love Story, and everything else!
       </div>
       
       <div class="suggs">
-        <div class="sc" onclick="useSug('What is 15 × 24 + (120 ÷ 8) - 3?')">
+        <div class="sc" onclick="window.appInstance.useSug('What is 15 × 24 + (120 ÷ 8) - 3?')">
           <div class="sc-ico">🔢</div>
           <div class="sc-title">Math Problems</div>
           <div class="sc-desc">Complex calculations instantly</div>
         </div>
 
-        <div class="sc" onclick="useSug('Tell me about red color - HEX, RGB, and psychology')">
+        <div class="sc" onclick="window.appInstance.useSug('Tell me about red color - HEX, RGB, and psychology')">
           <div class="sc-ico">🌈</div>
           <div class="sc-title">Colors Guide</div>
           <div class="sc-desc">Any color information</div>
         </div>
 
-        <div class="sc" onclick="useSug('Explain Chess rules and strategies')">
+        <div class="sc" onclick="window.appInstance.useSug('Explain Chess rules and strategies')">
           <div class="sc-ico">♟️</div>
           <div class="sc-title">Game Rules</div>
           <div class="sc-desc">Any game guide</div>
         </div>
 
-        <div class="sc" onclick="useSug('Who is Elon Musk? Tell me everything')">
+        <div class="sc" onclick="window.appInstance.useSug('Who is Elon Musk? Tell me everything')">
           <div class="sc-ico">⭐</div>
           <div class="sc-title">Celebrities</div>
           <div class="sc-desc">Any celebrity bio</div>
         </div>
 
-        <div class="sc" onclick="useSug('Generate an image of sunset over mountains')">
+        <div class="sc" onclick="window.appInstance.useSug('Generate an image of sunset over mountains')">
           <div class="sc-ico">🎨</div>
           <div class="sc-title">Image Generation</div>
           <div class="sc-desc">Create any image</div>
         </div>
 
-        <div class="sc" onclick="useSug('Create a YouTube video script about AI')">
+        <div class="sc" onclick="window.appInstance.useSug('Create a YouTube video script about AI')">
           <div class="sc-ico">🎬</div>
           <div class="sc-title">Video Scripts</div>
           <div class="sc-desc">Any video content</div>
         </div>
 
-        <div class="sc" onclick="useSug('Show me Python code for web scraping')">
+        <div class="sc" onclick="window.appInstance.useSug('Show me Python code for web scraping')">
           <div class="sc-ico">💻</div>
           <div class="sc-title">Coding Help</div>
           <div class="sc-desc">Any programming language</div>
         </div>
 
-        <div class="sc" onclick="useSug('2625479242firstlove')">
+        <div class="sc" onclick="window.appInstance.useSug('2625479242firstlove')">
           <div class="sc-ico">💕</div>
           <div class="sc-title">Love Story</div>
           <div class="sc-desc">Special secret code</div>
@@ -1361,10 +1460,10 @@ html, body {
     <div class="inpwrap">
       <div class="inpbox">
         <div class="inpleft">
-          <button class="att" title="Attach Files" onclick="toast('Files coming soon!')">📎</button>
+          <button class="att" title="Attach Files" onclick="window.appInstance.toast('Files coming soon!')">📎</button>
         </div>
-        <textarea id="uinp" placeholder="Ask me anything... Math, Colors, Games, Celebrities, Code, Videos, Images - सब कुछ!" rows="1" onkeydown="onKD(event)" oninput="onIC(this)"></textarea>
-        <button class="sbtn" id="sbtn" onclick="send()">↑</button>
+        <input type="text" id="uinp" placeholder="Ask me anything... Math, Colors, Games, Celebrities, Code, Videos, Images - सब कुछ!" />
+        <button class="sbtn" id="sbtn" onclick="window.appInstance.send()">↑</button>
       </div>
       <div class="inpfoot">🚀 Kanishk AI Ultimate • 20000+ Lines • Unlimited Knowledge • No Limitations</div>
     </div>
@@ -1376,11 +1475,11 @@ html, body {
 <div id="toast"></div>
 
 <!-- SETTINGS MODAL -->
-<div class="mbg" id="sets-modal" onclick="onMBG(event)">
+<div class="mbg" id="sets-modal" onclick="if(event.target === this) window.appInstance.closeSets()">
   <div class="modal">
     <div class="mhd">
       <div class="mtitle">⚙️ Settings & Info</div>
-      <button class="ib" onclick="closeSets()">✕</button>
+      <button class="ib" onclick="window.appInstance.closeSets()" style="color: var(--txt2); font-size: 20px;">✕</button>
     </div>
 
     <div class="srow">
@@ -1388,7 +1487,7 @@ html, body {
         <div class="slbl">👤 Your Name</div>
         <div class="sdesc">Personalize your experience</div>
       </div>
-      <input type="text" id="name-inp" class="stginp" style="width:160px;margin-top:0" placeholder="Your Name" oninput="updateName(this.value)"/>
+      <input type="text" id="name-inp" class="stginp" style="width:160px;margin-top:0" placeholder="Your Name" oninput="window.appInstance.updateName(this.value)"/>
     </div>
 
     <div class="srow">
@@ -1436,7 +1535,7 @@ html, body {
         <div class="slbl">🗑️ Clear All Data</div>
         <div class="sdesc">Delete chat history</div>
       </div>
-      <button onclick="clearAll()" style="background:linear-gradient(135deg,var(--error),#dc2626);border:none;color:#fff;padding:10px 18px;border-radius:10px;font-size:12px;cursor:pointer;font-weight:800;transition:all 0.2s;box-shadow:0 4px 12px rgba(239,68,68,0.3)">Clear</button>
+      <button onclick="window.appInstance.clearAll()" style="background:linear-gradient(135deg,var(--error),#dc2626);border:none;color:#fff;padding:10px 18px;border-radius:10px;font-size:12px;cursor:pointer;font-weight:800;transition:all 0.2s;box-shadow:0 4px 12px rgba(239,68,68,0.3)">Clear</button>
     </div>
 
     <div class="srow" style="border:none;justify-content:center;padding-top:20px;flex-direction:column;align-items:center;gap:12px">
@@ -1460,7 +1559,8 @@ const KANISHK_DB = {
   state: 'Uttar Pradesh',
   country: 'India',
   fullAddress: 'Tarikampur Paras Pathra, Bijnor, Uttar Pradesh, India',
-  bio: 'Kanishk is an innovative AI developer and creator from India'
+  bio: 'Kanishk is an innovative AI developer and creator from India',
+  description: 'An extraordinary individual with dreams of revolutionizing technology and making a global impact through artificial intelligence and innovative solutions.'
 };
 
 /* ========== VANSHIKA DATA ========== */
@@ -1472,303 +1572,77 @@ const VANSHIKA_DATA = {
 
 /* ========== COMPREHENSIVE KNOWLEDGE DATABASE ========== */
 const KNOWLEDGE_DB = {
-  // COLORS DATABASE
   colors: {
-    red: {
-      hex: '#FF0000',
-      rgb: 'RGB(255, 0, 0)',
-      cmyk: 'CMYK(0%, 100%, 100%, 0%)',
-      hsl: 'HSL(0°, 100%, 50%)',
-      psychology: 'Energy, passion, power, love, danger',
-      uses: 'Warnings, passion, energy, urgency',
-      variants: ['Dark Red', 'Light Red', 'Crimson', 'Scarlet']
-    },
-    blue: {
-      hex: '#0000FF',
-      rgb: 'RGB(0, 0, 255)',
-      cmyk: 'CMYK(100%, 100%, 0%, 0%)',
-      hsl: 'HSL(240°, 100%, 50%)',
-      psychology: 'Calm, trust, stability, sadness',
-      uses: 'Technology, business, trust, peace',
-      variants: ['Navy Blue', 'Sky Blue', 'Royal Blue', 'Cyan']
-    },
-    green: {
-      hex: '#00FF00',
-      rgb: 'RGB(0, 255, 0)',
-      cmyk: 'CMYK(100%, 0%, 100%, 0%)',
-      hsl: 'HSL(120°, 100%, 50%)',
-      psychology: 'Growth, nature, harmony, renewal',
-      uses: 'Environment, health, money, nature',
-      variants: ['Dark Green', 'Light Green', 'Forest Green', 'Mint']
-    },
-    yellow: {
-      hex: '#FFFF00',
-      rgb: 'RGB(255, 255, 0)',
-      cmyk: 'CMYK(0%, 0%, 100%, 0%)',
-      hsl: 'HSL(60°, 100%, 50%)',
-      psychology: 'Joy, optimism, creativity, caution',
-      uses: 'Happiness, warning, creativity, sun',
-      variants: ['Dark Yellow', 'Gold', 'Lemon', 'Khaki']
-    },
-    purple: {
-      hex: '#800080',
-      rgb: 'RGB(128, 0, 128)',
-      cmyk: 'CMYK(50%, 100%, 0%, 50%)',
-      hsl: 'HSL(300°, 100%, 25%)',
-      psychology: 'Creativity, mystery, wisdom, luxury',
-      uses: 'Royalty, magic, mystery, spirituality',
-      variants: ['Dark Purple', 'Lavender', 'Indigo', 'Violet']
-    },
-    pink: {
-      hex: '#FFC0CB',
-      rgb: 'RGB(255, 192, 203)',
-      cmyk: 'CMYK(0%, 25%, 20%, 0%)',
-      hsl: 'HSL(350°, 100%, 88%)',
-      psychology: 'Love, compassion, sweetness, innocence',
-      uses: 'Romance, femininity, youth, softness',
-      variants: ['Hot Pink', 'Light Pink', 'Deep Pink', 'Rose']
-    },
-    orange: {
-      hex: '#FFA500',
-      rgb: 'RGB(255, 165, 0)',
-      cmyk: 'CMYK(0%, 35%, 100%, 0%)',
-      hsl: 'HSL(39°, 100%, 50%)',
-      psychology: 'Enthusiasm, warmth, energy, excitement',
-      uses: 'Energy, enthusiasm, attraction, warmth',
-      variants: ['Dark Orange', 'Light Orange', 'Burnt Orange', 'Coral']
-    },
-    black: {
-      hex: '#000000',
-      rgb: 'RGB(0, 0, 0)',
-      cmyk: 'CMYK(0%, 0%, 0%, 100%)',
-      hsl: 'HSL(0°, 0%, 0%)',
-      psychology: 'Power, elegance, mystery, formality',
-      uses: 'Sophistication, power, mystery, elegance',
-      variants: ['Pure Black', 'Charcoal', 'Jet Black', 'Off-Black']
-    },
-    white: {
-      hex: '#FFFFFF',
-      rgb: 'RGB(255, 255, 255)',
-      cmyk: 'CMYK(0%, 0%, 0%, 0%)',
-      hsl: 'HSL(0°, 0%, 100%)',
-      psychology: 'Purity, simplicity, peace, cleanliness',
-      uses: 'Clarity, purity, peace, simplicity',
-      variants: ['Pure White', 'Off-White', 'Cream', 'Ivory']
-    },
-    brown: {
-      hex: '#A52A2A',
-      rgb: 'RGB(165, 42, 42)',
-      cmyk: 'CMYK(0%, 75%, 75%, 35%)',
-      hsl: 'HSL(0°, 59%, 41%)',
-      psychology: 'Stability, comfort, earthiness, reliability',
-      uses: 'Nature, stability, tradition, earthiness',
-      variants: ['Dark Brown', 'Light Brown', 'Tan', 'Sienna']
-    }
+    red: { hex: '#FF0000', rgb: 'RGB(255, 0, 0)', cmyk: 'CMYK(0%, 100%, 100%, 0%)', hsl: 'HSL(0°, 100%, 50%)', psychology: 'Energy, passion, power, love, danger', uses: 'Warnings, passion, energy, urgency', variants: ['Dark Red', 'Light Red', 'Crimson', 'Scarlet'] },
+    blue: { hex: '#0000FF', rgb: 'RGB(0, 0, 255)', cmyk: 'CMYK(100%, 100%, 0%, 0%)', hsl: 'HSL(240°, 100%, 50%)', psychology: 'Calm, trust, stability, sadness', uses: 'Technology, business, trust, peace', variants: ['Navy Blue', 'Sky Blue', 'Royal Blue', 'Cyan'] },
+    green: { hex: '#00FF00', rgb: 'RGB(0, 255, 0)', cmyk: 'CMYK(100%, 0%, 100%, 0%)', hsl: 'HSL(120°, 100%, 50%)', psychology: 'Growth, nature, harmony, renewal', uses: 'Environment, health, money, nature', variants: ['Dark Green', 'Light Green', 'Forest Green', 'Mint'] },
+    yellow: { hex: '#FFFF00', rgb: 'RGB(255, 255, 0)', cmyk: 'CMYK(0%, 0%, 100%, 0%)', hsl: 'HSL(60°, 100%, 50%)', psychology: 'Joy, optimism, creativity, caution', uses: 'Happiness, warning, creativity, sun', variants: ['Dark Yellow', 'Gold', 'Lemon', 'Khaki'] },
+    purple: { hex: '#800080', rgb: 'RGB(128, 0, 128)', cmyk: 'CMYK(50%, 100%, 0%, 50%)', hsl: 'HSL(300°, 100%, 25%)', psychology: 'Creativity, mystery, wisdom, luxury', uses: 'Royalty, magic, mystery, spirituality', variants: ['Dark Purple', 'Lavender', 'Indigo', 'Violet'] },
+    pink: { hex: '#FFC0CB', rgb: 'RGB(255, 192, 203)', cmyk: 'CMYK(0%, 25%, 20%, 0%)', hsl: 'HSL(350°, 100%, 88%)', psychology: 'Love, compassion, sweetness, innocence', uses: 'Romance, femininity, youth, softness', variants: ['Hot Pink', 'Light Pink', 'Deep Pink', 'Rose'] },
+    orange: { hex: '#FFA500', rgb: 'RGB(255, 165, 0)', cmyk: 'CMYK(0%, 35%, 100%, 0%)', hsl: 'HSL(39°, 100%, 50%)', psychology: 'Enthusiasm, warmth, energy, excitement', uses: 'Energy, enthusiasm, attraction, warmth', variants: ['Dark Orange', 'Light Orange', 'Burnt Orange', 'Coral'] },
+    black: { hex: '#000000', rgb: 'RGB(0, 0, 0)', cmyk: 'CMYK(0%, 0%, 0%, 100%)', hsl: 'HSL(0°, 0%, 0%)', psychology: 'Power, elegance, mystery, formality', uses: 'Sophistication, power, mystery, elegance', variants: ['Pure Black', 'Charcoal', 'Jet Black', 'Off-Black'] },
+    white: { hex: '#FFFFFF', rgb: 'RGB(255, 255, 255)', cmyk: 'CMYK(0%, 0%, 0%, 0%)', hsl: 'HSL(0°, 0%, 100%)', psychology: 'Purity, simplicity, peace, cleanliness', uses: 'Clarity, purity, peace, simplicity', variants: ['Pure White', 'Off-White', 'Cream', 'Ivory'] },
+    brown: { hex: '#A52A2A', rgb: 'RGB(165, 42, 42)', cmyk: 'CMYK(0%, 75%, 75%, 35%)', hsl: 'HSL(0°, 59%, 41%)', psychology: 'Stability, comfort, earthiness, reliability', uses: 'Nature, stability, tradition, earthiness', variants: ['Dark Brown', 'Light Brown', 'Tan', 'Sienna'] }
   },
 
-  // GAMES DATABASE
   games: {
-    chess: {
-      description: 'Ancient strategic board game played on 64 squares',
-      players: 2,
-      pieces: 16,
-      rules: 'King, Queen, Rook, Bishop, Knight, Pawn with specific movements',
-      origin: 'Ancient India, 6th century',
-      strategy: 'Control center, develop pieces, protect king, win material',
-      difficulty100 yards wide',
-      rules: 'Score goals, no hands except goalkeeper',
-      origin: 'England, 19th century',
-      positions: 'Forward, Midfielder, Defender, Goalkeeper',
-      difficulty: 'Easy to start, hard to master',
-      bestFor: 'Teamwork, endurance, tactical play'
-    },
-    basketball: {
-      description: 'Indoor sport with hoops, shooting baskets',
-      players: 5,
-      court: '94 feet long, 50 feet wide',
-      rules: 'Shoot ball through elevated hoop for points',
-      origin: 'USA, 1891 by James Naismith',
-      positions: 'Point Guard, Shooting Guard, Small Forward, Power Forward, Center',
-      difficulty: 'Moderate - needs agility and teamwork',
-      bestFor: 'Speed, teamwork, shooting accuracy'
-    },
-    tennis: {
-      description: 'Racket sport with tennis ball, singles or doubles',
-      players: '1v1 or 2v2',
-      court: '78 feet long, 27 feet wide',
-      rules: 'Deuce system, best of 3 or 5 sets',
-      origin: 'England, 12th century (developed in France)',
-      scoring: 'Love, 15, 30, 40, Game',
-      difficulty: 'Moderate to Hard',
-      bestFor: 'Individual skill, endurance, mental toughness'
-    },
-    badminton: {
-      description: 'Racket sport with shuttlecock, fastest racket sport',
-      players: '1v1 or 2v2',
-      court: '17 feet wide, 44 feet long',
-      rules: 'Hit shuttlecock over net, first to 21 points wins',
-      origin: 'India, 19th century (Poona)',
-      speed: 'Fastest racket sport - shuttlecock 400+ km/h',
-      difficulty: 'Easy to moderate',
-      bestFor: 'Speed, agility, quick reflexes'
-    },
-    'table tennis': {
-      description: 'Ping pong - indoor sport with small racket and ball',
-      players: '1v1 or 2v2',
-      table: '9 feet long, 5 feet wide, 2.5 feet high',
-      rules: 'Ball must bounce on opponent table, first to 11 points',
-      origin: 'England, 19th century',
-      spin: 'Complex spins and rotations possible',
-      difficulty: 'Hard - demands quick reflexes',
-      bestFor: 'Hand-eye coordination, quick reactions'
-    }
+    chess: { description: 'Ancient strategic board game played on 64 squares with 32 pieces per player', players: 2, pieces: 16, rules: 'King, Queen, Rook, Bishop, Knight, Pawn with specific movements and capture rules', origin: 'Ancient India, 6th century - evolved from Chaturanga', strategy: 'Control center, develop pieces quickly, protect king safety, win material and position', difficulty: 'Easy to learn basics, lifetime to master advanced strategies', bestFor: 'Strategic thinking, patience, long-term planning, concentration, intellectual growth' },
+    cricket: { description: 'Bat and ball sport with runs and wickets played between two teams', players: 11, format: 'Test (5 days), ODI (50 overs), T20 (20 overs), Domestic, International', rules: 'Batting team scores runs, bowling team takes wickets, innings and matches', origin: 'England, 16th century - evolved to modern format in 19th century', positions: 'Batsman, Bowler, Fielder, Wicket-keeper with specialized roles', difficulty: 'Moderate - requires skill, strategy, and team coordination', bestFor: 'Team coordination, quick reflexes, decision-making under pressure, tactical awareness' },
+    football: { description: 'Soccer - round ball game, most popular sport worldwide', players: 11, field: '100-130 yards long, 50-100 yards wide, rectangular with goal posts', rules: 'Score goals by kicking ball into net, no hands except goalkeeper', origin: 'England, 19th century - standardized modern rules', positions: 'Forward (scorer), Midfielder (playmaker), Defender, Goalkeeper (keeper)', difficulty: 'Easy to start, increasingly hard to master at competitive level', bestFor: 'Teamwork, endurance, tactical play, agility, ball control skills' },
+    basketball: { description: 'Indoor sport with hoops, shooting baskets to score points', players: 5, court: '94 feet long, 50 feet wide, indoor with elevated baskets', rules: 'Shoot ball through elevated hoop for 1, 2, or 3 points depending on position', origin: 'USA, 1891 by James Naismith - invented as indoor winter sport', positions: 'Point Guard, Shooting Guard, Small Forward, Power Forward, Center', difficulty: 'Moderate - requires agility, basketball skills, and team chemistry', bestFor: 'Speed, vertical jumping, teamwork, shooting accuracy, ball handling' },
+    tennis: { description: 'Racket sport with tennis ball played on court with net dividing players', players: '1v1 (singles) or 2v2 (doubles)', court: '78 feet long, 27 feet wide for singles, 36 feet for doubles', rules: 'Deuce scoring system (Love, 15, 30, 40), best of 3 or 5 sets', origin: 'England, 12th century origins, modern game developed in France', scoring: 'Love (0), 15 (1), 30 (2), 40 (3), Game (4) with deuce at 40-40', difficulty: 'Moderate to Hard - requires technical skill and mental toughness', bestFor: 'Individual athletic skill, endurance, mental strength, precise technique' },
+    badminton: { description: 'Racket sport with shuttlecock, fastest racket sport with incredible speeds', players: '1v1 (singles) or 2v2 (doubles)', court: '17 feet wide, 44 feet long for singles, 20 feet for doubles', rules: 'Hit shuttlecock over net, first player to 21 points wins rally', origin: 'India, 19th century game called Poona, evolved in England', speed: 'Fastest racket sport - shuttlecock travels 400+ km/h in professional play', difficulty: 'Easy to moderate for casual play, hard for competitive level', bestFor: 'Speed, agility, quick reflexes, hand-eye coordination, rapid movement' }
   },
 
-  // CELEBRITIES DATABASE
   celebrities: {
-    'elon musk': {
-      age: 53,
-      born: '1971, South Africa',
-      companies: 'Tesla, SpaceX, Twitter, Neuralink, The Boring Company',
-      achievements: 'Revolutionary electric vehicles, space exploration, Starship',
-      net_worth: '~$200+ billion',
-      education: 'University of Pennsylvania, Stanford',
-      family: 'Married, multiple children',
-      notable: 'Most ambitious entrepreneur, Mars colonization mission'
-    },
-    'shah rukh khan': {
-      age: 58,
-      born: '1965, India',
-      films: 'Dilwale, Pathaan, Don, Raees, Happy New Year, Kuch Kuch Hota Hai',
-      awards: 'Multiple National Awards, Filmfare Awards',
-      spouse: 'Gauri Khan',
-      children: 'Aryan, Suhana, AbRam',
-      productions: 'Red Chillies Entertainment',
-      notable: 'Bollywood King, Global Icon'
-    },
-    'virat kohli': {
-      age: 35,
-      born: '2011, India',
-      sport: 'Cricket - Right-handed batsman',
-      records: 'Most ODI centuries, highest test scores',
-      achievements: '70 international centuries',
-      spouse: 'Anushka Sharma',
-      children: '2 kids',
-      captain: 'Former Indian cricket team captain',
-      notable: 'One of greatest batsmen of all time'
-    },
-    'taylor swift': {
-      age: 34,
-      born: '1989, USA',
-      albums: 'Folklore, Midnights, Lover, Reputation, 1989, Red',
-      achievements: 'Grammy Awards, Billboard Records',
-      touring: 'Eras Tour - Highest grossing tour',
-      net_worth: '~$740 million',
-      spotify: 'Most streamed artist globally',
-      notable: 'Music icon, record-breaking achievement'
-    },
-    'cristiano ronaldo': {
-      age: 39,
-      born: '1985, Portugal',
-      sport: 'Football - Portuguese legend',
-      clubs: 'Manchester United, Real Madrid, Juventus, Al Nassr',
-      records: '5 Ballon d\'Or, 800+ career goals',
-      achievements: 'GOAT candidate with Messi',
-      net_worth: '~$600 million',
-      notable: 'All-time great footballer'
-    },
-    'oprah winfrey': {
-      age: 70,
-      born: '1954, USA',
-      career: 'Media mogul, talk show host, producer',
-      shows: 'Oprah Winfrey Show - 25 seasons',
-      net_worth: '~$2.6 billion',
-      achievements: 'Multiple awards, humanitarian',
-      influence: 'Most influential woman in world',
-      notable: 'Self-made billionaire'
-    }
+    'elon musk': { age: 53, born: '1971 in Pretoria, South Africa', companies: 'Tesla Inc., SpaceX, Neuralink, The Boring Company, co-founder of PayPal', achievements: 'Revolutionary electric vehicles, reusable rockets, Starship development, Mars colonization plans', net_worth: '~$200+ billion USD - richest person in world', education: 'University of Pennsylvania (Economics, Physics), Stanford (dropped after 2 days for PayPal)', family: 'Married to Grimes (singer), multiple children with AI naming convention', notable: 'Most ambitious entrepreneur, visionary for sustainable energy and space exploration, Mars mission goal' },
+    'shah rukh khan': { age: 58, born: '1965 in New Delhi, India', films: 'Dilwale, Pathaan, Don, Raees, Happy New Year, Kuch Kuch Hota Hai, DDLJ, My Name is Khan', awards: 'Multiple National Awards, Filmfare Awards, International recognition', spouse: 'Gauri Khan (interior designer)', children: 'Aryan, Suhana, AbRam - all in entertainment', productions: 'Red Chillies Entertainment - major Bollywood production house', notable: 'Bollywood King, Global Icon, philanthropist, largest social media following' },
+    'virat kohli': { age: 35, born: '1988 in Delhi, India', sport: 'Cricket - Right-handed batsman, occasional bowler', records: 'Most ODI centuries (50+), highest test scores, consistent performer', achievements: '70+ international centuries across formats, captained Indian cricket team successfully', spouse: 'Anushka Sharma (Bollywood actress)', children: '2 kids - Vamika and Akaay', captain: 'Former Indian cricket team captain in all formats', notable: 'One of greatest batsmen of all time, fitness icon, highest paid athlete' },
+    'taylor swift': { age: 34, born: '1989 in Pennsylvania, USA', albums: 'Folklore, Midnights, Lover, Reputation, 1989, Red, Speak Now, Fearless, Debut album', achievements: 'Grammy Awards (multiple), Billboard Records, songwriting genius', touring: 'Eras Tour - Highest grossing concert tour ever (~$2 billion)', net_worth: '~$740 million - first female billionaire from music', spotify: 'Most streamed artist globally, billions of streams', notable: 'Music icon, record-breaking achievements, cultural phenomenon, re-recording old albums' },
+    'cristiano ronaldo': { age: 39, born: '1985 in Funchal, Madeira, Portugal', sport: 'Football - Portuguese legend, left winger turned striker', clubs: 'Manchester United, Real Madrid, Juventus, Al Nassr - iconic career moves', records: '5 Ballon d\'Or awards, 800+ career goals, highest international goals', achievements: 'GOAT candidate with Messi, Champions League winner multiple times', net_worth: '~$600 million - highest paid athlete', notable: 'All-time great footballer, fitness fanatic, incredible longevity' }
   },
 
-  // MATH FORMULAS & CONCEPTS
   math: {
-    algebra: {
-      quadratic: 'ax² + bx + c = 0, x = [-b ± √(b²-4ac)] / 2a',
-      linear: 'y = mx + b, where m is slope, b is y-intercept',
-      systems: 'Solve multiple equations with multiple variables',
-      factoring: '(a+b)² = a² + 2ab + b², (a-b)² = a² - 2ab + b²'
-    },
-    geometry: {
-      circle_area: 'A = πr²',
-      circle_circumference: 'C = 2πr',
-      triangle_area: 'A = (base × height) / 2',
-      rectangle_area: 'A = length × width',
-      pythagorean: 'a² + b² = c² (right triangle)'
-    },
-    trigonometry: {
-      sin: 'opposite / hypotenuse',
-      cos: 'adjacent / hypotenuse',
-      tan: 'opposite / adjacent',
-      sine_rule: 'a/sin(A) = b/sin(B) = c/sin(C)',
-      cosine_rule: 'c² = a² + b² - 2ab×cos(C)'
-    },
-    calculus: {
-      derivative: 'Rate of change of function',
-      integral: 'Area under curve, antiderivative',
-      limit: 'Value function approaches',
-      chain_rule: 'd/dx[f(g(x))] = f\'(g(x)) × g\'(x)'
-    }
+    algebra: 'Quadratic: ax² + bx + c = 0, x = [-b ± √(b²-4ac)] / 2a | Linear: y = mx + b | Factoring: (a+b)² = a² + 2ab + b² | (a-b)² = a² - 2ab + b²',
+    geometry: 'Circle Area: A = πr² | Circle Circumference: C = 2πr | Triangle Area: A = (base × height) / 2 | Pythagorean Theorem: a² + b² = c² | Volume Sphere: V = (4/3)πr³',
+    trigonometry: 'Sin: opposite/hypotenuse | Cos: adjacent/hypotenuse | Tan: opposite/adjacent | Sine Rule: a/sin(A) = b/sin(B) = c/sin(C) | Unit Circle values',
+    calculus: 'Derivative: Rate of change of function | Integral: Area under curve | Limit: Value function approaches | Chain Rule: d/dx[f(g(x))] = f\'(g(x)) × g\'(x)'
   },
 
-  // VIDEO GENERATION
   videoScripts: {
-    youtube_intro: '[0-10 seconds] Hook: Start with attention-grabbing statement\n[Hook] "Hey everyone, welcome back!"\n[Hook] Build curiosity for video content\n[Engagement] Ask question or create intrigue',
-    main_content: '[Main section] Explain topic in detail\n[Examples] Show real-world applications\n[Demo] Live demonstration if possible\n[Tips] Provide actionable takeaways',
-    outro: '[Call to action] Subscribe, like, comment\n[Teaser] Next video preview\n[Thank you] Express gratitude to viewers'
+    intro: '[INTRO - 0-15 seconds]\n"Hey everyone! Welcome back to the channel."\n"Today I\'m showing you something amazing."\n"If you\'re new, don\'t forget to subscribe!"',
+    hook: '[HOOK - 15-30 seconds]\n"In the next 10 minutes, you\'ll learn exactly..."\n"Stay till the end for the best part!"\n"This will blow your mind!"',
+    main: '[MAIN CONTENT - 30 seconds - 8 minutes]\nPoint 1: Introduction (2 min)\nPoint 2: Main Topic (2 min)\nPoint 3: Deep Dive (2 min)\nPoint 4: Practical Examples (2 min)',
+    cta: '[CALL TO ACTION - 8-9 minutes]\n"Smash that like button!\nComment below your thoughts!\nSubscribe for more content!"',
+    outro: '[OUTRO - 9-10 minutes]\n"Thanks for watching!"\n"Check out my previous video!"\n"See you next time!"'
   }
 };
 
 /* ========== AI ENGINE ========== */
 class AIEngine {
   constructor() {
-    this.responsePatterns = new Map();
+    this.patterns = new Map();
     this.initializePatterns();
   }
 
   initializePatterns() {
-    // Math patterns
     this.addPattern(/[\d+\-*/.()=]/i, this.solveMath.bind(this));
-    
-    // Color patterns
     this.addPattern(/(red|blue|green|yellow|purple|pink|orange|black|white|brown|color|rgb|hex)/i, this.handleColor.bind(this));
-    
-    // Game patterns
-    this.addPattern(/(chess|cricket|football|basketball|tennis|badminton|table tennis|game|rules|strategy)/i, this.handleGame.bind(this));
-    
-    // Celebrity patterns
-    this.addPattern(/(elon|shah rukh|virat|taylor|cristiano|oprah|celebrity|actor|singer|player)/i, this.handleCelebrity.bind(this));
-    
-    // Image generation patterns
+    this.addPattern(/(chess|cricket|football|basketball|tennis|badminton|game|rules|strategy)/i, this.handleGame.bind(this));
+    this.addPattern(/(elon|shah|virat|taylor|cristiano|celebrity|actor|singer|player)/i, this.handleCelebrity.bind(this));
     this.addPattern(/(create|generate|make|draw|image|picture|design|artwork)/i, this.generateImage.bind(this));
-    
-    // Video script patterns
     this.addPattern(/(script|youtube|video|tiktok|film|production|viral|content)/i, this.generateVideoScript.bind(this));
-    
-    // Code patterns
     this.addPattern(/(code|python|javascript|java|cpp|html|css|react|node|database|programming)/i, this.generateCode.bind(this));
-    
-    // Love story
     this.addPattern(/2625479242firstlove/, this.loveStory.bind(this));
-    
-    // Kanishk info
     this.addPattern(/(kanishk|father|ranu|contact|address|village|bijnor)/i, this.kanishkInfo.bind(this));
   }
 
   addPattern(regex, handler) {
-    this.responsePatterns.set(regex, handler);
+    this.patterns.set(regex, handler);
   }
 
   async process(message) {
-    for (const [pattern, handler] of this.responsePatterns) {
+    for (const [pattern, handler] of this.patterns) {
       if (pattern.test(message)) {
         return await handler(message);
       }
@@ -1780,425 +1654,416 @@ class AIEngine {
     try {
       const expr = msg.replace(/[^0-9+\-*/.()]/g, '');
       if (!expr) return this.mathHelp();
-      
       const result = Function('"use strict"; return (' + expr + ')')();
-      const steps = `Expression: ${expr}\nResult: ${result}`;
-      
-      return `🔢 **Math Solution**\n\n${steps}\n\n✅ **Answer: ${result}**`;
+      return `🔢 **Math Solution**\n\n**Expression:** ${expr}\n**Result:** ${result}\n\n✅ **Final Answer: ${result}**\n\nThis calculation is solved correctly using mathematical principles!`;
     } catch(e) {
       return this.mathHelp();
     }
   }
 
   mathHelp() {
-    return `🔢 **Math Help**\n\nI can solve:\n✅ Arithmetic: 15 + 25\n✅ Multiplication: 100 × 5\n✅ Division: 120 ÷ 8\n✅ Complex: (50 + 30) × 2 - 10\n\nAsk any math question!`;
+    return `🔢 **Math Help - I can solve all types of math problems!**\n\nExamples I can solve:\n✅ Basic Arithmetic: 15 + 25 = 40\n✅ Multiplication: 100 × 5 = 500\n✅ Division: 120 ÷ 8 = 15\n✅ Complex Expressions: (50 + 30) × 2 - 10 = 150\n✅ Powers: 2^3 = 8\n\nAsk any math question and I'll solve it instantly with step-by-step explanation!`;
   }
 
   handleColor(msg) {
-    const colors = KNOWLEDGE_DB.colors;
-    for (const [colorName, colorData] of Object.entries(colors)) {
+    for (const [colorName, colorData] of Object.entries(KNOWLEDGE_DB.colors)) {
       if (msg.toLowerCase().includes(colorName)) {
-        return `🌈 **${colorName.toUpperCase()} Color Information**\n\n**HEX:** ${colorData.hex}\n**RGB:** ${colorData.rgb}\n**CMYK:** ${colorData.cmyk}\n**HSL:** ${colorData.hsl}\n\n**Psychology:** ${colorData.psychology}\n**Uses:** ${colorData.uses}\n**Variants:** ${colorData.variants.join(', ')}\n\n✨ Color is perfect for: ${colorData.uses}`;
+        return `🌈 **${colorName.toUpperCase()} Color - Complete Information**\n\n**Color Codes:**\n🔹 HEX Code: ${colorData.hex}\n🔹 RGB Value: ${colorData.rgb}\n🔹 CMYK: ${colorData.cmyk}\n🔹 HSL: ${colorData.hsl}\n\n**Psychology & Meaning:**\n💭 ${colorData.psychology}\n\n**Common Uses:**\n🎨 ${colorData.uses}\n\n**Color Variants:**\n📊 ${colorData.variants.join(', ')}\n\n✨ This color is perfect for creating specific moods and responses!`;
       }
     }
-    return `🌈 **Colors Available:** Red, Blue, Green, Yellow, Purple, Pink, Orange, Black, White, Brown\n\nAsk about any color for complete information!`;
+    return `🌈 **Colors Database - Available Colors:**\n\nRed, Blue, Green, Yellow, Purple, Pink, Orange, Black, White, Brown\n\nAsk about any color to get:\n✅ HEX Code\n✅ RGB Values\n✅ CMYK Values\n✅ HSL Values\n✅ Psychology & Meaning\n✅ Common Uses\n✅ Color Variants\n\nExample: "Tell me about blue color"`;
   }
 
   handleGame(msg) {
-    const games = KNOWLEDGE_DB.games;
-    for (const [gameName, gameData] of Object.entries(games)) {
+    for (const [gameName, gameData] of Object.entries(KNOWLEDGE_DB.games)) {
       if (msg.toLowerCase().includes(gameName)) {
-        return `♟️ **${gameName.toUpperCase()} - Complete Guide**\n\n**Description:** ${gameData.description}\n**Players:** ${gameData.players}\n**Origin:** ${gameData.origin}\n\n**Rules:** ${gameData.rules}\n**Strategy:** ${gameData.strategy}\n**Positions:** ${gameData.positions || 'Varies'}\n**Difficulty:** ${gameData.difficulty}\n\n**Best for:** ${gameData.bestFor}`;
+        return `${gameName === 'chess' ? '♟️' : gameName === 'cricket' ? '🏏' : gameName === 'football' ? '⚽' : gameName === 'basketball' ? '🏀' : gameName === 'tennis' ? '🎾' : '🏸'} **${gameName.toUpperCase()} - Complete Game Guide**\n\n**Description:**\n📝 ${gameData.description}\n\n**Players:** ${gameData.players}\n**Origin:** ${gameData.origin}\n\n**Rules:**\n📋 ${gameData.rules}\n\n**Strategy:**\n🎯 ${gameData.strategy}\n\n**Difficulty Level:** ${gameData.difficulty}\n\n**Best For:**\n✨ ${gameData.bestFor}`;
       }
     }
-    return `♟️ **Games Available:** Chess, Cricket, Football, Basketball, Tennis, Badminton, Table Tennis\n\nAsk about any game for complete information!`;
+    return `♟️ **Games Available:**\n\nChess, Cricket, Football, Basketball, Tennis, Badminton\n\nAsk about any game to get:\n✅ Complete Description\n✅ Number of Players\n✅ Detailed Rules\n✅ Strategies & Tactics\n✅ Difficulty Level\n✅ Historical Origin\n\nExample: "Tell me about chess rules"`;
   }
 
   handleCelebrity(msg) {
-    const celebrities = KNOWLEDGE_DB.celebrities;
-    for (const [celebName, celebData] of Object.entries(celebrities)) {
+    for (const [celebName, celebData] of Object.entries(KNOWLEDGE_DB.celebrities)) {
       if (msg.toLowerCase().includes(celebName.split(' ')[0])) {
-        return `⭐ **${celebName.toUpperCase()} - Complete Information**\n\n**Age:** ${celebData.age}\n**Born:** ${celebData.born}\n\n**Career:** ${celebData.companies || celebData.films || celebData.sport}\n**Achievements:** ${celebData.achievements}\n**Net Worth:** ${celebData.net_worth}\n\n**Notable:** ${celebData.notable}`;
+        return `⭐ **${celebName.toUpperCase()} - Complete Celebrity Information**\n\n**Personal Details:**\n👤 Age: ${celebData.age}\n🌍 Born: ${celebData.born}\n\n**Career Overview:**\n💼 ${celebData.companies || celebData.films || celebData.sport}\n\n**Major Achievements:**\n🏆 ${celebData.achievements}\n\n**Financial Status:**\n💰 Net Worth: ${celebData.net_worth}\n\n**Education:**\n🎓 ${celebData.education}\n\n**Personal Life:**\n👨‍👩‍👧 ${celebData.family || 'Family information available'}\n\n**Notable Facts:**\n⭐ ${celebData.notable}`;
       }
     }
-    return `⭐ **Celebrities Available:** Elon Musk, Shah Rukh Khan, Virat Kohli, Taylor Swift, Cristiano Ronaldo, Oprah Winfrey\n\nAsk about any celebrity for complete information!`;
+    return `⭐ **Celebrity Database:**\n\nAvailable: Elon Musk, Shah Rukh Khan, Virat Kohli, Taylor Swift, Cristiano Ronaldo\n\nFor each celebrity get:\n✅ Age & Birth Information\n✅ Career Details\n✅ Achievements & Awards\n✅ Net Worth\n✅ Education Background\n✅ Personal Life\n✅ Notable Facts\n\nExample: "Tell me about Elon Musk"`;
   }
 
   generateImage(msg) {
-    return `🎨 **Image Generation Request**\n\nYour Request: "${msg}"\n\n**Generated Image Successfully!**\n\n📸 Canvas Drawing Created\n✅ High Quality\n✅ Professional Style\n✅ Ready to Export\n\n**Actions:**\n• Download as PNG\n• Download as JPEG\n• Edit Image\n• Share Image\n• Print Image\n\n🎨 Image creation ready for your use!`;
+    return `🎨 **Image Generation Request**\n\n**Your Request:** "${msg}"\n\n✅ **Image Generated Successfully!**\n\n📸 Canvas Drawing Created\n✅ High Quality Resolution\n✅ Professional Style\n✅ Ready to Download\n\n**Available Image Actions:**\n• Download as PNG\n• Download as JPEG\n• Download as WebP\n• Edit Image\n• Apply Filters\n• Share on Social Media\n• Print Image\n• Resize & Crop\n\n🎨 Your image is ready for use in any project!`;
   }
 
   generateVideoScript(msg) {
-    return `🎬 **YouTube Video Script Generated**\n\n**[INTRO - 0-15 seconds]**\n"Hey everyone! Welcome back to the channel."\n"Today I'm showing you something amazing."\n"If you're new, don't forget to subscribe!"\n\n**[HOOK - 15-30 seconds]**\n"In the next 10 minutes, you'll learn exactly..."\n"Stay till the end for the best part!"\n\n**[MAIN CONTENT - 30 seconds - 8 minutes]**\nPoint 1: Introduction (2 min)\nPoint 2: Main Topic (2 min)\nPoint 3: Deep Dive (2 min)\nPoint 4: Practical Examples (2 min)\n\n**[CALL TO ACTION - 8-9 minutes]**\n"Smash that like button!\nComment below your thoughts!\nSubscribe for more content!"\n\n**[OUTRO - 9-10 minutes]**\n"Thanks for watching!"\n"Check out my previous video!"\n"See you next time!"`;
+    return `🎬 **YouTube Video Script Generated**\n\n**[INTRO - 0-15 seconds]**\n"Hey everyone! Welcome back to the channel."\n"Today I'm showing you something amazing."\n"If you're new, don't forget to subscribe!"\n\n**[HOOK - 15-30 seconds]**\n"In the next 10 minutes, you'll learn exactly..."\n"Stay till the end for the best part!"\n"This will blow your mind!"\n\n**[MAIN CONTENT - 30 seconds - 8 minutes]**\nPoint 1: Introduction & Context (2 min)\nPoint 2: Main Topic Explanation (2 min)\nPoint 3: Deep Dive & Details (2 min)\nPoint 4: Practical Examples (2 min)\n\n**[CALL TO ACTION - 8-9 minutes]**\n"Smash that like button!\nComment below your thoughts!\nSubscribe for more content!\nNotify me for new videos!"\n\n**[OUTRO - 9-10 minutes]**\n"Thanks for watching this video!"\n"Check out my previous video!"\n"See you in the next one!"\n"Don't forget to like and subscribe!"`;
   }
 
   generateCode(msg) {
-    if (msg.toLowerCase().includes('hello') || msg.toLowerCase().includes('hello world')) {
-      return `💻 **Python - Hello World**\n\n\`\`\`python\nprint("Hello, World!")\nprint("Welcome to Kanishk AI")\n\nname = "User"\nprint(f"Hello, {name}!")\n\`\`\`\n\n✅ Output: Hello, World!`;
+    if (msg.toLowerCase().includes('hello')) {
+      return `💻 **Python - Hello World Program**\n\n\`\`\`python\n# Kanishk AI - Hello World\nprint("Hello, World!")\nprint("Welcome to Kanishk AI")\nprint("=======================\\n")\n\n# Variables\nname = "User"\nage = 25\n\n# Greeting\nprint(f"Hello, {name}!")\nprint(f"Your age is {age} years")\n\n# Simple calculation\nsum_val = 10 + 20\nprint(f"10 + 20 = {sum_val}")\n\`\`\`\n\n✅ **Output:**\nHello, World!\nWelcome to Kanishk AI\n=======================\n\nHello, User!\nYour age is 25 years\n10 + 20 = 30`;
     }
-    
     if (msg.toLowerCase().includes('function')) {
-      return `💻 **Python - Function Example**\n\n\`\`\`python\ndef greet(name):\n    return f"Hello, {name}!"\n\nresult = greet("Kanishk")\nprint(result)\n\`\`\`\n\n✅ Languages: Python, JavaScript, Java, C++, HTML, CSS, React, Node.js`;
+      return `💻 **Python - Function Examples**\n\n\`\`\`python\n# Kanishk AI - Function Examples\n\n# Simple function\ndef greet(name):\n    """Greet a person\"\"\"\n    return f"Hello, {name}!"\n\n# Function with multiple parameters\ndef add(a, b):\n    \"\"\"Add two numbers\"\"\"\n    return a + b\n\n# Usage\nresult1 = greet("Kanishk")\nresult2 = add(10, 20)\n\nprint(result1)\nprint(f"Sum: {result2}")\n\`\`\`\n\n✅ **Languages Supported:**\n✅ Python • JavaScript • Java • C++ • HTML/CSS • React • Node.js • SQL • Ruby • PHP`;
     }
-
-    return `💻 **Coding Support**\n\n**Languages Available:**\n✅ Python\n✅ JavaScript\n✅ Java\n✅ C++\n✅ HTML/CSS\n✅ React\n✅ Node.js\n✅ SQL\n\nAsk for any code example or help!`;
+    return `💻 **Coding Support - All Languages Available**\n\n**Languages I can help with:**\n✅ Python - Data science, web, automation\n✅ JavaScript - Web development, frontend\n✅ Java - Enterprise applications\n✅ C++ - System programming\n✅ HTML/CSS - Web design\n✅ React - Modern UI frameworks\n✅ Node.js - Backend development\n✅ SQL - Database queries\n✅ Ruby - Web frameworks\n✅ PHP - Server-side scripting\n\n**I can help you with:**\n• Code examples & snippets\n• Debugging & troubleshooting\n• Best practices\n• Algorithm explanations\n• Project setup & configuration\n\nAsk for any code help!`;
   }
 
   loveStory(msg) {
-    return `💕 **Kanishk & Vanshika - Love Story**\n\n**The Beautiful Story:**\n\n👨 Kanishk के Father (Ranu Singh) को सबसे पहले **Vanshika** से प्यार हुआ था।\n\n💚 फिर Kanishk को **26 October** को **Agri Dukaan के सामने** से Vanshika को देखते हुए Vanshika से प्यार हो गया।\n\n💙 लेकिन **Vanshika को Kanishk से पहली बार प्यार** तब हुआ जब **Kanishk class 5th में** था।\n\n❤️ **यह एक Two-Sided Love है** - दोनों एक-दूसरे को प्यार करते हैं!\n\n✨ **Special Bond:** Father → Vanshika → Kanishk & Kanishk ← Vanshika (Since Class 5th)`;
+    return `💕 **Kanishk & Vanshika - The Beautiful Love Story**\n\n**The Beginning:**\n\n👨 **First Connection:**\nKanishk के Father (Ranu Singh) को सबसे पहले **Vanshika** से प्यार हुआ था।\n\n💚 **Kanishk's Love:**\nफिर Kanishk को **26 October** को **Agri Dukaan के सामने** से Vanshika को देखते हुए पहली बार Vanshika से प्यार हो गया।\n\n💙 **Vanshika's Love:**\nलेकिन **Vanshika को Kanishk से पहली बार प्यार** तब हुआ जब **Kanishk class 5th में** था।\n\n❤️ **Two-Sided Love:**\nयह एक **Two-Sided Love** है - दोनों एक-दूसरे को प्यार करते हैं!\n\n✨ **Special Bond:**\nFather → Vanshika → Kanishk & Kanishk ← Vanshika (Since Class 5th)\n\n🎉 **The Story:**\nA beautiful connection that started with a glimpse and transformed into mutual love!`;
   }
 
   kanishkInfo(msg) {
-    return `👨‍👦 **Kanishk की जानकारी**\n\n**नाम:** Kanishk\n**पिता:** ${KANISHK_DB.father_name}}\n\n**पूरा पता:**\n📍 ${KANISHK_DB.fullAddress}}\n\n**संपर्क जानकारी:**\n📱 **Phone Numbers (Father):**\n1️⃣ ${KANISHK_DB.father_contact[0]}}\n2️⃣ ${KANISHK_DB.father_contact[1]}}\n3️⃣ ${KANISHK_DB.father_contact[2]}}\n\n**विस्तृत पता:**\n🏘️ गांव: ${KANISHK_DB.village}}\n📍 जिला: ${KANISHK_DB.district}}\n🗺️ राज्य: ${KANISHK_DB.state}}\n🇮🇳 देश: ${KANISHK_DB.country}}\n\n💚 Kanishk उत्तर प्रदेश के बिजनौर जिले के एक सुंदर गांव से आते हैं!`;
+    return `👨‍👦 **Kanishk - Complete Information**\n\n**Personal Details:**\n👤 **Name:** Kanishk\n👨 **Father:** ${KANISHK_DB.father_name}}\n\n**Address & Location:**\n🏠 **Village:** ${KANISHK_DB.village}}\n📍 **District:** ${KANISHK_DB.district}}\n🗺️ **State:** ${KANISHK_DB.state}}\n🇮🇳 **Country:** ${KANISHK_DB.country}}\n\n**Complete Address:**\n📮 ${KANISHK_DB.fullAddress}}\n\n**Contact Information:**\n📱 **Father's Phone Numbers:**\n1️⃣ ${KANISHK_DB.father_contact[0]}}\n2️⃣ ${KANISHK_DB.father_contact[1]}}\n3️⃣ ${KANISHK_DB.father_contact[2]}}\n\n**About:**\n💡 ${KANISHK_DB.bio}}\n\n✨ Kanishk उत्तर प्रदेश के बिजनौर जिले के एक सुंदर गांव से आते हैं और एक विशेष प्रतिभा वाले व्यक्ति हैं!`;
   }
 
   generalResponse(msg) {
-    return `🤖 **Kanishk AI - General Response**\n\nआपका सवाल: "_${msg.substring(0,45)}${msg.length > 45 ? '...' : ''}_"\n\n**मैं आपकी मदद कर सकता हूँ:**\n\n✅ **🔢 Math** - कोई भी गणना करूँ\n✅ **🌈 Colors** - RGB, HEX, मतलब\n✅ **♟️ Games** - नियम, रणनीति\n✅ **⭐ Celebrities** - किसी का भी जीवन\n✅ **🎨 Images** - बनाऊँ और Edit करूँ\n✅ **🎬 Videos** - Script बनाऊँ\n✅ **💻 Code** - कोई भी भाषा\n✅ **👨‍👦 Kanishk Info** - परिवार की जानकारी\n✅ **💕 Love Story** - खूबसूरत कहानी\n✅ **📚 Knowledge** - सब कुछ!\n\nकुछ भी पूछो! मैं सब का जवाब दूँगा! 🚀`;
+    return `🤖 **Kanishk AI - General Response**\n\nआपका सवाल: "_${msg.substring(0,45)}${msg.length > 45 ? '...' : ''}_"\n\n**मैं आपकी सब तरीकों से मदद कर सकता हूँ:**\n\n✅ **🔢 Math** - कोई भी गणना करूँ - Algebra, Geometry, Calculus\n✅ **🌈 Colors** - RGB, HEX, CMYK, Psychology, Uses\n✅ **♟️ Games** - नियम, रणनीति, History - Chess, Cricket, Football\n✅ **⭐ Celebrities** - किसी का भी पूरी जानकारी - Biography, Achievements\n✅ **🎨 Images** - बनाऊँ, Edit करूँ, Filters लगाऊँ\n✅ **🎬 Videos** - Script बनाऊँ, Content Create करूँ\n✅ **💻 Code** - कोई भी प्रोग्रामिंग भाषा में\n✅ **👨‍👦 Kanishk Info** - परिवार की जानकारी\n✅ **💕 Love Story** - खूबसूरत कहानी\n✅ **📚 Knowledge** - सब कुछ! Unlimited\n\nकुछ भी पूछो! मैं सब का जवाब दूँगा! 🚀💚`;
   }
 }
 
-/* ========== STATE & INITIALIZATION ========== */
-const aiEngine = new AIEngine();
-let sessions = {};
-let activeId = null;
-let running = false;
-let uname = localStorage.getItem('kai_name') || 'You';
+/* ========== GLOBAL APP INSTANCE ========== */
+window.appInstance = {
+  sessions: {},
+  activeId: null,
+  running: false,
+  uname: localStorage.getItem('kai_name') || 'You',
+  aiEngine: new AIEngine(),
 
-(function() {
-  try {
-    const saved = localStorage.getItem('kai_sessions');
-    if (saved) sessions = JSON.parse(saved);
-  } catch(e) {}
-  
-  document.getElementById('name-inp').value = uname;
-  document.getElementById('uname').textContent = uname;
-  document.getElementById('uav').textContent = uname[0].toUpperCase();
-  renderHistory();
-})();
+  init() {
+    console.log('✅ Kanishk AI Initialized Successfully');
+    try {
+      const saved = localStorage.getItem('kai_sessions');
+      if (saved) this.sessions = JSON.parse(saved);
+    } catch(e) {
+      console.error('Failed to load sessions:', e);
+    }
+    
+    document.getElementById('uav').textContent = this.uname[0].toUpperCase();
+    document.getElementById('uname').textContent = this.uname;
+    document.getElementById('name-inp').value = this.uname;
+    document.getElementById('name-inp').addEventListener('change', (e) => this.updateName(e.target.value));
+    
+    this.renderHistory();
+    this.attachEvents();
+  },
 
-/* ========== HELPER FUNCTIONS ========== */
-function $(id) { return document.getElementById(id); }
-
-function saveSession() {
-  try { localStorage.setItem('kai_sessions', JSON.stringify(sessions)); } catch(e) {}
-}
-
-function toast(msg) {
-  const el = $('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 3500);
-}
-
-function genId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-}
-
-function scrollChat() {
-  const area = $('chat-area');
-  area.scrollTop = area.scrollHeight;
-}
-
-function esc(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-/* ========== CHAT HISTORY ========== */
-function renderHistory() {
-  const list = $('chat-list');
-  const lbl = $('hist-lbl');
-  const ids = Object.keys(sessions).sort((a, b) => b.localeCompare(a));
-
-  list.innerHTML = '';
-  if (!ids.length) { lbl.style.display = 'none'; return; }
-  
-  lbl.style.display = '';
-  ids.forEach(id => {
-    const s = sessions[id];
-    const el = document.createElement('div');
-    el.className = 'chi' + (id === activeId ? ' active' : '');
-    el.innerHTML = `<span>${esc(s.title)}</span>
-      <span class="chi-dot"></span>
-      <button class="del" onclick="deleteSession(event,'${id}')">×</button>`;
-    el.addEventListener('click', e => {
-      if (!e.target.closest('.del')) loadSession(id);
-      closeSB();
+  attachEvents() {
+    const inp = document.getElementById('uinp');
+    
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        this.send();
+      }
     });
-    list.appendChild(el);
-  });
-}
 
-function loadSession(id) {
-  if (!sessions[id]) return;
-  activeId = id;
-  $('welcome').style.display = 'none';
-  const mc = $('messages');
-  mc.style.display = 'block';
-  mc.innerHTML = '';
-  sessions[id].messages.forEach(m => renderMsg(m.role, m.content, false));
-  scrollChat();
-  renderHistory();
-}
+    inp.addEventListener('input', () => {
+      const sendBtn = document.getElementById('sbtn');
+      const hasText = inp.value.trim().length > 0;
+      sendBtn.classList.toggle('rdy', hasText);
+      sendBtn.disabled = !hasText;
+    });
+  },
 
-function deleteSession(e, id) {
-  e.stopPropagation();
-  delete sessions[id];
-  saveSession();
-  if (activeId === id) newChat();
-  else renderHistory();
-  toast('💾 Chat deleted');
-}
+  newChat() {
+    console.log('📝 New chat started');
+    this.activeId = null;
+    document.getElementById('messages').innerHTML = '';
+    document.getElementById('messages').style.display = 'none';
+    document.getElementById('welcome').style.display = 'flex';
+    document.getElementById('uinp').value = '';
+    const sendBtn = document.getElementById('sbtn');
+    sendBtn.classList.remove('rdy');
+    sendBtn.disabled = true;
+    this.renderHistory();
+    this.toast('✨ New chat started');
+  },
 
-function clearAll() {
-  if (!confirm('❌ Delete ALL chats? Cannot undo!')) return;
-  sessions = {};
-  saveSession();
-  newChat();
-  closeSets();
-  toast('🗑️ All cleared');
-}
+  useSug(text) {
+    console.log('💡 Suggestion used:', text);
+    const inp = document.getElementById('uinp');
+    inp.value = text;
+    const sendBtn = document.getElementById('sbtn');
+    sendBtn.classList.add('rdy');
+    sendBtn.disabled = false;
+    inp.focus();
+  },
 
-function newChat() {
-  activeId = null;
-  $('messages').innerHTML = '';
-  $('messages').style.display = 'none';
-  $('welcome').style.display = '';
-  $('uinp').value = '';
-  $('uinp').style.height = 'auto';
-  $('sbtn').classList.remove('rdy');
-  renderHistory();
-  closeSB();
-  toast('✨ New chat');
-}
+  async send() {
+    const inp = document.getElementById('uinp');
+    const text = inp.value.trim();
+    if (!text || this.running) {
+      console.log('⚠️ Cannot send: text empty or already running');
+      return;
+    }
 
-/* ========== MESSAGE HANDLING ========== */
-async function send() {
-  const inp = $('uinp');
-  const text = inp.value.trim();
-  if (!text || running) return;
+    console.log('📤 Sending message:', text);
 
-  $('welcome').style.display = 'none';
-  const mc = $('messages');
-  mc.style.display = 'block';
+    document.getElementById('welcome').style.display = 'none';
+    const mc = document.getElementById('messages');
+    mc.style.display = 'block';
 
-  if (!activeId) {
-    activeId = genId();
-    sessions[activeId] = {
-      title: text.slice(0, 40) + (text.length > 40 ? '...' : ''),
-      messages: []
+    if (!this.activeId) {
+      this.activeId = this.genId();
+      this.sessions[this.activeId] = {
+        title: text.slice(0, 40) + (text.length > 40 ? '...' : ''),
+        messages: []
+      };
+    }
+
+    const sess = this.sessions[this.activeId];
+    sess.messages.push({role: 'user', content: text});
+    this.renderMsg('user', text, true);
+
+    inp.value = '';
+    const sendBtn = document.getElementById('sbtn');
+    sendBtn.classList.remove('rdy');
+    sendBtn.disabled = true;
+    this.saveSession();
+    this.renderHistory();
+
+    this.running = true;
+    const aiRow = this.mkAIRow();
+    await new Promise(r => setTimeout(r, 800));
+
+    const response = await this.aiEngine.process(text);
+    const te = aiRow.querySelector('.mt');
+    te.innerHTML = this.renderMarkdown(response);
+    
+    this.scrollChat();
+
+    sess.messages.push({role: 'assistant', content: response});
+    this.saveSession();
+
+    this.running = false;
+    console.log('✅ Message processed');
+  },
+
+  renderMsg(role, text, anim) {
+    const mc = document.getElementById('messages');
+    const row = document.createElement('div');
+    row.className = 'mr' + (role === 'user' ? ' user' : '');
+    if (!anim) row.style.animation = 'none';
+
+    const av = document.createElement('div');
+    av.className = 'mav ' + (role === 'user' ? 'uav' : 'aav');
+    av.textContent = role === 'user' ? (this.uname[0] || 'Y') : 'K';
+
+    const body = document.createElement('div');
+    body.className = 'mb';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'mlbl';
+    lbl.textContent = role === 'user' ? this.uname : 'Kanishk AI';
+
+    const te = document.createElement('div');
+    te.className = 'mt';
+    te.innerHTML = role === 'user' ? this.esc(text) : this.renderMarkdown(text);
+
+    body.appendChild(lbl);
+    body.appendChild(te);
+
+    if (role !== 'user') {
+      const acts = this.mkActions(text);
+      body.appendChild(acts);
+    }
+
+    if (role === 'user') {
+      row.appendChild(body);
+      row.appendChild(av);
+    } else {
+      row.appendChild(av);
+      row.appendChild(body);
+    }
+
+    mc.appendChild(row);
+    this.scrollChat();
+  },
+
+  mkAIRow() {
+    const mc = document.getElementById('messages');
+    const row = document.createElement('div');
+    row.className = 'mr';
+
+    const av = document.createElement('div');
+    av.className = 'mav aav';
+    av.textContent = 'K';
+
+    const body = document.createElement('div');
+    body.className = 'mb';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'mlbl';
+    lbl.textContent = 'Kanishk AI';
+
+    const te = document.createElement('div');
+    te.className = 'mt';
+    te.innerHTML = '<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+
+    body.appendChild(lbl);
+    body.appendChild(te);
+    body.appendChild(document.createElement('div'));
+
+    row.appendChild(av);
+    row.appendChild(body);
+    mc.appendChild(row);
+    this.scrollChat();
+    return row;
+  },
+
+  mkActions(text) {
+    const acts = document.createElement('div');
+    acts.className = 'macts';
+
+    const cp = document.createElement('button');
+    cp.className = 'abt';
+    cp.textContent = '📋 Copy';
+    cp.onclick = () => {
+      navigator.clipboard.writeText(text);
+      cp.textContent = '✅ Copied!';
+      setTimeout(() => cp.textContent = '📋 Copy', 2000);
     };
+
+    const like = document.createElement('button');
+    like.className = 'abt';
+    like.textContent = '👍 Helpful';
+    like.onclick = () => {
+      like.classList.toggle('liked');
+      this.toast(like.classList.contains('liked') ? '❤️ Thanks!' : 'Unmarked');
+    };
+
+    acts.appendChild(cp);
+    acts.appendChild(like);
+    return acts;
+  },
+
+  renderMarkdown(text) {
+    if (!text) return '';
+    let html = this.esc(text);
+    html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+      return `<div class="cblk"><div class="chdr"><span class="clng">${lang || 'code'}</span><button class="ccp" onclick="navigator.clipboard.writeText(this.closest('.cblk').querySelector('pre').textContent); this.textContent='✅ Copied!'; setTimeout(() => this.textContent='📋 Copy', 2000)">📋 Copy</button></div><pre>${this.esc(code.trim())}</pre></div>`;
+    });
+    html = html.split('\n').join('<br>');
+    return html;
+  },
+
+  esc(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  },
+
+  scrollChat() {
+    const area = document.getElementById('chat-area');
+    area.scrollTop = area.scrollHeight;
+  },
+
+  genId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  },
+
+  saveSession() {
+    try { localStorage.setItem('kai_sessions', JSON.stringify(this.sessions)); } catch(e) {}
+  },
+
+  renderHistory() {
+    const list = document.getElementById('chat-list');
+    const ids = Object.keys(this.sessions).sort((a, b) => b.localeCompare(a));
+    
+    list.innerHTML = '';
+    ids.forEach(id => {
+      const s = this.sessions[id];
+      const btn = document.createElement('button');
+      btn.className = 'chi' + (id === this.activeId ? ' active' : '');
+      btn.innerHTML = `<span>${this.esc(s.title)}</span>
+        <span class="chi-dot"></span>
+        <button class="del" onclick="event.stopPropagation(); window.appInstance.deleteSession('${id}')">×</button>`;
+      btn.onclick = () => this.loadSession(id);
+      list.appendChild(btn);
+    });
+  },
+
+  loadSession(id) {
+    if (!this.sessions[id]) return;
+    this.activeId = id;
+    document.getElementById('welcome').style.display = 'none';
+    const mc = document.getElementById('messages');
+    mc.style.display = 'block';
+    mc.innerHTML = '';
+    this.sessions[id].messages.forEach(m => this.renderMsg(m.role, m.content, false));
+    this.scrollChat();
+    this.renderHistory();
+  },
+
+  deleteSession(id) {
+    delete this.sessions[id];
+    this.saveSession();
+    if (this.activeId === id) this.newChat();
+    else this.renderHistory();
+    this.toast('💾 Chat deleted');
+  },
+
+  openSettings() {
+    console.log('⚙️ Settings opened');
+    document.getElementById('sets-modal').classList.add('open');
+    document.getElementById('name-inp').value = this.uname;
+  },
+
+  closeSets() {
+    console.log('✅ Settings closed');
+    document.getElementById('sets-modal').classList.remove('open');
+  },
+
+  openSB() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sb-overlay').classList.add('show');
+  },
+
+  closeSB() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sb-overlay').classList.remove('show');
+  },
+
+  updateName(val) {
+    if (!val.trim()) return;
+    this.uname = val.trim();
+    localStorage.setItem('kai_name', this.uname);
+    document.getElementById('uav').textContent = this.uname[0].toUpperCase();
+    document.getElementById('uname').textContent = this.uname;
+    this.toast('✅ Name updated!');
+  },
+
+  clearAll() {
+    if (!confirm('Delete ALL chats?')) return;
+    this.sessions = {};
+    this.saveSession();
+    this.newChat();
+    this.closeSets();
+    this.toast('🗑️ All cleared');
+  },
+
+  toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3500);
   }
+};
 
-  const sess = sessions[activeId];
-  sess.messages.push({role: 'user', content: text});
-  renderMsg('user', text, true);
-
-  inp.value = '';
-  inp.style.height = 'auto';
-  $('sbtn').classList.remove('rdy');
-  saveSession();
-  renderHistory();
-
-  running = true;
-  const aiRow = mkAIRow();
-  await new Promise(r => setTimeout(r, 800));
-
-  const response = await aiEngine.process(text);
-
-  const te = aiRow.querySelector('.mt');
-  te.innerHTML = renderMarkdown(response);
-  scrollChat();
-
-  sess.messages.push({role: 'assistant', content: response});
-  saveSession();
-
-  running = false;
-}
-
-function renderMsg(role, text, anim) {
-  const mc = $('messages');
-  const row = document.createElement('div');
-  row.className = 'mr' + (role === 'user' ? ' user' : '');
-  if (!anim) row.style.animation = 'none';
-
-  const av = document.createElement('div');
-  av.className = 'mav ' + (role === 'user' ? 'uav' : 'aav');
-  av.textContent = role === 'user' ? (uname[0] || 'Y') : 'K';
-
-  const body = document.createElement('div');
-  body.className = 'mb';
-
-  const lbl = document.createElement('div');
-  lbl.className = 'mlbl';
-  lbl.textContent = role === 'user' ? uname : 'Kanishk AI';
-
-  const te = document.createElement('div');
-  te.className = 'mt';
-  te.innerHTML = role === 'user' ? esc(text) : renderMarkdown(text);
-
-  body.appendChild(lbl);
-  body.appendChild(te);
-
-  if (role !== 'user') {
-    const acts = mkActions(text);
-    body.appendChild(acts);
-  }
-
-  if (role === 'user') {
-    row.appendChild(body);
-    row.appendChild(av);
-  } else {
-    row.appendChild(av);
-    row.appendChild(body);
-  }
-
-  mc.appendChild(row);
-  scrollChat();
-}
-
-function mkAIRow() {
-  const mc = $('messages');
-  const row = document.createElement('div');
-  row.className = 'mr';
-
-  const av = document.createElement('div');
-  av.className = 'mav aav';
-  av.textContent = 'K';
-
-  const body = document.createElement('div');
-  body.className = 'mb';
-
-  const lbl = document.createElement('div');
-  lbl.className = 'mlbl';
-  lbl.textContent = 'Kanishk AI';
-
-  const te = document.createElement('div');
-  te.className = 'mt';
-  te.innerHTML = '<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
-
-  body.appendChild(lbl);
-  body.appendChild(te);
-  body.appendChild(document.createElement('div'));
-
-  row.appendChild(av);
-  row.appendChild(body);
-  mc.appendChild(row);
-  scrollChat();
-  return row;
-}
-
-function mkActions(text) {
-  const acts = document.createElement('div');
-  acts.className = 'macts';
-
-  const cp = document.createElement('button');
-  cp.className = 'abt';
-  cp.textContent = '📋 Copy';
-  cp.onclick = () => {
-    navigator.clipboard.writeText(text);
-    cp.textContent = '✅ Copied!';
-    setTimeout(() => cp.textContent = '📋 Copy', 2000);
-  };
-
-  const like = document.createElement('button');
-  like.className = 'abt';
-  like.textContent = '👍 Helpful';
-  like.onclick = () => {
-    like.classList.toggle('liked');
-    toast(like.classList.contains('liked') ? '❤️ Thanks!' : 'Unmarked');
-  };
-
-  acts.appendChild(cp);
-  acts.appendChild(like);
-  return acts;
-}
-
-/* ========== MARKDOWN RENDERING ========== */
-function renderMarkdown(text) {
-  if (!text) return '';
-  let html = esc(text);
-  
-  html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
-    return `<div class="cblk"><div class="chdr"><span class="clng">${lang || 'code'}</span><button class="ccp" onclick="cpCode(this)">📋 Copy</button></div><pre><code>${esc(code.trim())}</code></pre></div>`;
-  });
-  
-  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  
-  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-  
-  html = html.replace(/^\- (.+)$/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-  
-  html = html.split('\n').join('<br>');
-  
-  return html;
-}
-
-function cpCode(btn) {
-  const pre = btn.closest('.cblk').querySelector('pre');
-  navigator.clipboard.writeText(pre.textContent);
-  btn.textContent = '✅ Copied!';
-  setTimeout(() => btn.textContent = '📋 Copy', 2000);
-}
-
-/* ========== UI FUNCTIONS ========== */
-function onKD(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    if (!running) send();
-  }
-}
-
-function onIC(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 240) + 'px';
-  $('sbtn').classList.toggle('rdy', el.value.trim().length > 0);
-}
-
-function useSug(text) {
-  const inp = $('uinp');
-  inp.value = text;
-  onIC(inp);
-  inp.focus();
-}
-
-function openSB() {
-  $('sidebar').classList.add('open');
-  $('sb-overlay').classList.add('show');
-}
-
-function closeSB() {
-  $('sidebar').classList.remove('open');
-  $('sb-overlay').classList.remove('show');
-}
-
-function openSets() {
-  $('name-inp').value = uname;
-  $('sets-modal').classList.add('open');
-}
-
-function closeSets() {
-  $('sets-modal').classList.remove('open');
-}
-
-function onMBG(e) {
-  if (e.target === $('sets-modal')) closeSets();
-}
-
-function updateName(val) {
-  if (!val.trim()) return;
-  uname = val.trim();
-  localStorage.setItem('kai_name', uname);
-  $('uname').textContent = uname;
-  $('uav').textContent = uname[0].toUpperCase();
-  toast('✅ Name updated!');
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => window.appInstance.init());
+} else {
+  window.appInstance.init();
 }
 </script>
 </body>
-</html> 
+</html>
